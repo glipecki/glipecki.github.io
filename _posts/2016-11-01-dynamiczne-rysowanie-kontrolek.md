@@ -106,7 +106,7 @@ todo:
 - skąd wziąć fabrykę
 
 Materiały:
-- [Komunikacja pomiędzy komponentami, w tym oznaczanie jako zmienne lokalne i odwołania z kontrolerów.](https://angular.io/docs/ts/latest/cookbook/component-communication.html)
+- [Komunikacja pomiędzy komponentami, w tym oznaczanie jako zmienne lokalne i odwołania z kontrolerów.](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-child-local-var)
 - [Dokumentacja dekoratora _@ViewChild_](https://angular.io/docs/ts/latest/api/core/index/ViewChild-decorator.html)
 - [Dokumentacja klasy _ViewContainerRef_](https://angular.io/docs/ts/latest/api/core/index/ViewContainerRef-class.html)
 - [Cykl życia komponentu](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html)
