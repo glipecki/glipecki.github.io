@@ -1,0 +1,109 @@
+# --- General options --- #
+url: "http://glipecki.github.io"
+baseurl: ""
+
+title: Java po polsku
+avatar: "https://s.gravatar.com/avatar/0d804441dc5e2463f0ac8d9d0b7470b7?s=160"
+
+# navbar-links:
+
+author:
+  name: Grzegorz Lipecki
+  email: "grzegorz.lipecki@gmail.com"
+  github: glipecki
+  twitter: ggregorry
+
+footer-links-active:
+  rss: true
+  email: true
+  twitter: true
+  github: true
+
+share-links-active:
+  twitter: true
+
+disqus: "glipecki"
+google_analytics: "UA-86679747-1"
+excerpt_length: 50
+
+timezone: "Europe/Warsaw"
+markdown: kramdown
+highlighter: rouge
+permalink: /:year-:month-:day-:title/
+paginate: 5
+
+kramdown:
+  input: GFM
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+      social-share: true
+  -
+    scope:
+      path: ""
+    values:
+      layout: "page"
+      show-avatar: true
+
+link-tags: false
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
+  - Vagrantfile
+
+prose:
+  rooturl: '_posts'
+  media: 'img'
+  ignore:
+    - 404.html
+    - LICENSE
+    - feed.xml
+    - _config.yml
+    - /_layouts
+    - /_includes
+    - /css
+    - /img
+    - /js
+  metadata:
+    _posts:
+      - name: "layout"
+        field:
+          element: "hidden"
+          value: "post"
+      - name: "title"
+        field:
+          element: "text"
+          label: "Post title"
+          placeholder: "Title"
+          alterable: true
+      - name: "subtitle"
+        field:
+          element: "textarea"
+          label: "Subtitle"
+          placeholder: "A description of your post."
+          alterable: true
+      - name: "date"
+        field:
+          element: "text"
+          label: "Date"
+          help: "Enter date of post."
+          placeholder: "yyyy-mm-dd"
+          alterable: true
+      - name: "published"
+        field:
+          element: "checkbox"
+          label: "Publish"
+          help: "Check to publish post, uncheck to hide."
+
+gems:
+  - jekyll-paginate
