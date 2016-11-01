@@ -1,7 +1,9 @@
 ---
 layout: post
 title: Demo post!
-tags: [random]
+tags:
+  - random
+published: true
 ---
 
-Demo post...
+Demo post test.
