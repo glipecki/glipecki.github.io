@@ -20,7 +20,7 @@ layout: default
     </a>
 
     <p class="post-meta">
-    Posted on {{ post.date | date: "%B %-d, %Y" }}
+    Opublikowano {{ post.date | date: "%d/%m/%Y" }}
     </p>
 
     <div class="post-entry">
@@ -29,7 +29,7 @@ layout: default
     </div>
 
     <div class="blog-tags">
-      Tags: 
+      Tagi:
       {% for tag in post.tags %}
         <a href="/tag/{{ tag }}">{{ tag }}</a>
       {% endfor %}
