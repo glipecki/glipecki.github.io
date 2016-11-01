@@ -104,6 +104,23 @@ prose:
           element: "checkbox"
           label: "Publish"
           help: "Check to publish post, uncheck to hide."
-
+      - name: "tags"
+        field:
+          element: "multiselect"
+          label: "Add Tags"
+          placeholder: "Choose Tags"
+          options:
+            - name: "angular"
+              value: "angular"
+            - name: "spring"
+              value: "spring"
+            - name: "java"
+              value: "java"
+            - name: "javascript"
+              value: "javascript"
+            - name: "tools"
+              value: "tools"
+            - name: "typescript"
+              value: "typescript"
 gems:
   - jekyll-paginate
