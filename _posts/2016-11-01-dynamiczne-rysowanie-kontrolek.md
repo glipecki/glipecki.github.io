@@ -3,7 +3,7 @@ layout: post
 published: false
 tags:
   - angular
-title: Dynamiczne rysowanie kontrolek
+title: Dynamiczne tworzenie kontrolek
 ---
 
 Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej...
