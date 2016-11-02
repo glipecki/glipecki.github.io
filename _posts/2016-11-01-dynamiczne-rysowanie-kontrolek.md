@@ -6,11 +6,11 @@ tags:
 title: Dynamiczne tworzenie kontrolek w Angular 2
 ---
 
-Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej...
+Od pewnego czasu pracuję nad świeżym projektem opartym o Angular 2. Częścią projektu jest prezentowanie użytkownikowi dynamiczne generowanych elementów interfejsu. Nie jesteśmy w stanie zaprojektować z wyprzedzeniem ekranów, nie znając ani ich struktury, ani konkretnych kontrolek.
 
-Komponenty określają selektory którymi możemy je osadzać oraz szablony HTML opisujące sposób prezentacji. Korzystając z tego zestawu, w kolejnych szablona osadzamy kolejne komponenty wykorzystując ich selektory, zupełnie jakby były to natywne elementy HTMLa.
+Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej... Komponenty określają selektory którymi możemy je osadzać oraz szablony HTML opisujące sposób prezentacji. Korzystając z tego zestawu, w kolejnych szablona osadzamy kolejne komponenty wykorzystując ich selektory, zupełnie jakby były to natywne elementy HTMLa.
 
-Co jednak, jeżeli nie jesteśmy w stanie ustalic konkretnego komponentu na etapie pisania aplikacji, a dopiero w trakcie jej wykonania?
+Co jednak, jeżeli nie jesteśmy w stanie ustalić konkretnego komponentu na etapie pisania aplikacji, a dopiero w trakcie jej wykonania? Musimy wymyślić coś kreatywnego :wink:.
 
 ## Szybkie rozwiązanie
 
