@@ -85,28 +85,174 @@ Zmienna oznaczona dekoratorem _@ViewChild_ zostanie uzupełniona w trakcie tworz
 
 ```javascript
 @Component(...)
-class AppComponent {
+class AppComponent implements AfterViewInit {
 
 	@ViewChild('details', {read: ViewContainerRef})
 	private placeholder: ViewContainerRef;
     
-    ngOnInit():void {
-    	this.detailsComponentRef = this.placeholder.createComponent(this.detailsComponentFactory);
+    private componentRef: ComponentRef<any>;
+    
+    ngAfterViewInit():void {
+    	this.componentRef = this.placeholder.createComponent(this.componentFactory);
     }
     
 }
 ```
 
-Teraz pozostaje nam już tylko uzyskanie fabryki komponentów. W tym celu należy...
+Teraz pozostaje nam już tylko uzyskanie fabryki komponentów. Gotową do działania fabrykę najlepiej uzyskać z obiektu _ComponentFactoryResolver_. Sam komponent bez problemu wstrzyknąć z kontekstu _DI_, a następnie wywołać na nim metodę _resolveComponentFactory_ podając interesującą nas klasę komponentu.
 
-todo:
-- przekazywanie wartości do stworzonego komponentu
-- nasłuchiwanie na zmiany stworzonego komponentu
-- konieczność dodania nowej własności w definicji modułu i z czego to wynika
-- skąd wziąć fabrykę
+```javascript
+@Component(...)
+class AppComponent implements OnInit {
+
+	private componentFactory: ComponentFactory<any>;
+
+	constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+    }
+    
+    ngOnInit():void {
+    	this.componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.componentClass);
+    }
+    
+}
+```
+
+W ten sposób możliwe jest stworzenie dowolnego komponentu osiągalnego z kontekstu _DI_ aplikacji. Przy ręcznym tworzenie komponentów warto też pamiętać o poprawnym zamknięciu utworzonych obiektów, w tym celu możemy wykorzystać fazę _ngOnDestroy_ cyklu życia komponentów.
+
+```javascript
+@Component(...)
+class AppComponent implements OnDestroy {
+    
+    private componentRef: ComponentRef<any>;
+    
+    ngOnDestroy(): void {
+    	this.componentRef.destroy();
+    }
+    
+}
+```
+
+Ostatnia rzecz o której musimy pamiętać to odpowiednie oznaczenie komponentów tworzonych dynamicznie na poziomie definicji kontekstu _DI_. Standardowo Angular generuje kod jedynie dla tych komponentów które dla których zostały zdefiniowane referencje w kodzie. Takie referencje są tworzone automatycznie dla komponentów użytych w ramach metody bootstrap, w routingu, czy też po użyciu w szablonach widoków. Wszystkie pozostałe komponenty, nawet jeżeli zostałe zdefiniowane w sekcji _declarations_, zostaną pominięte - dzięki temu mechanizm _tree shaking_ będzie miał możliwość pominąć je przy budowaniu produkcyjnej wersji kodu. Komponenty dodawane dynamicznie musimy sami wskazać jawnie, na poziomie definicji modułu. W tym celu używamy pola _entryComponents_ dekoratora _@NgModule_.
+
+```javascript
+@NgModule({
+    imports: [...],
+    declarations: [BookDetails, MovieDetails, ComicDetails],
+    exports: [...],
+    entryComponents: [BookDetails, MovieDetails, ComicDetails]
+})
+export class ItemDetailsModule {
+}
+```
+
+Ostatnią rzeczą, na którą warto zwrócić uwagę, jest przekazywanie wartości do i z komponentu. W przypadku ręcznego dodawania komponentów do _DOM_ nie możemy skorzystać ze standardowego przekazywania wartości przez dekoratory _@Input()_ i _@Output()_. Komunikację z komponentem musimy oprogramować ręcznie. Jednak nie jest to trudne, bo obiekt _ComponentRef_ zawiera referencję na faktyczną intancję stworzonego obiektu. Wykorzystując ją możemy zarówno ustawić wartości, jak i nasłuchiwać na zmiany.
+
+```javascript
+@Component(...)
+class AppComponent implements AfterViewInit {
+
+    private componentRef: ComponentRef<any>;
+    
+    ngAfterViewInit():void {
+    	this.componentRef = this.placeholder.createComponent(this.componentFactory);
+        this.componentRef.instance.inputVal = 'Hello world';
+        this.componentRef.instance.outputVal.subscribe((...) => { ... });
+    }
+    
+}
+```
+
+Na koniec komplety kod źródłowy omawianego przykładu.
+
+_Komponent wrappera kontrolek_
+```javascript
+import {
+    Component, Input, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, Type, AfterViewInit,
+    OnDestroy, ComponentRef
+} from '@angular/core';
+
+@Component({
+    selector: 'control-wrapper',
+    template: `
+        <div *ngIf="componentClass">
+            <div #componentHolder></div>
+        </div>
+    `
+})
+export class ControlWrapper implements OnInit, AfterViewInit, OnDestroy {
+
+    private model: any;
+    @Input()
+    private controlFactory: IControlFactory;
+    @ViewChild('componentHolder', {read: ViewContainerRef})
+    private componentHolder: ViewContainerRef;
+    private componentClass: Type<IControl>;
+    private componentRef: ComponentRef<IControl>;
+
+    constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+    }
+
+    ngOnInit(): void {
+        this.componentClass = this.controlFactory.getControlClass(this.model.type);
+    }
+
+    ngOnDestroy(): void {
+        if (this.componentRef) {
+            this.componentRef.destroy();
+        }
+    }
+
+    ngAfterViewInit(): void {
+        if (this.componentClass && this.componentHolder) {
+            let componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.componentClass);
+            this.componentRef = this.componentHolder.createComponent(componentFactory);
+            this.updateControlModel();
+        }
+    }
+
+    private updateControlModel() {
+        this.componentRef.instance.setModel(this.model);
+    }
+
+}
+```
+
+_Przykładowa fabryka klas komponentów na podstawie modelu_
+```javascript
+export class ItemDetailsControlFactory implements IControlFactory {
+
+    getControlClass(type: string): Type<IControlFactory> {
+        if (type === 'movie') {
+            return BookDetails;
+        } else if (type === 'book') {
+            return MovieDetails;
+        } else if (type === 'comic') {
+            return ComicDetails;
+        } else {
+            return null;
+        }
+    }
+
+}
+```
+
+_Definicja modułu dynamicznych komponentów_
+```javascript
+import {NgModule} from '@angular/core';
+
+@NgModule({
+    imports: [...],
+    declarations: [BookDetails, MovieDetails, ComicDetails],
+    exports: [BookDetails, MovieDetails, ComicDetails],
+    entryComponents: [BookDetails, MovieDetails, ComicDetails]
+})
+export class ItemDetailsModule {
+}
+```
 
 Materiały:
 - [Komunikacja pomiędzy komponentami, w tym oznaczanie jako zmienne lokalne i odwołania z kontrolerów.](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-child-local-var)
 - [Dokumentacja dekoratora _@ViewChild_](https://angular.io/docs/ts/latest/api/core/index/ViewChild-decorator.html)
 - [Dokumentacja klasy _ViewContainerRef_](https://angular.io/docs/ts/latest/api/core/index/ViewContainerRef-class.html)
 - [Cykl życia komponentu](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html)
+- [FAQ na temat konieczności używania _entryComponents_](https://angular.io/docs/ts/latest/cookbook/ngmodule-faq.html#!#q-why-entry-components)
