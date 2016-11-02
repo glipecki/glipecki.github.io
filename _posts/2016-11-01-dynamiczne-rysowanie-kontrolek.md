@@ -105,7 +105,7 @@ class AppComponent implements AfterViewInit {
 
 ### Pobieranie fabryki komponentów
 
-Teraz pozostaje nam już tylko uzyskanie fabryki komponentów. Gotową do działania fabrykę najlepiej uzyskać z obiektu _ComponentFactoryResolver_. Sam komponent bez problemu wstrzyknąć z kontekstu _DI_, a następnie wywołać na nim metodę _resolveComponentFactory_ podając interesującą nas klasę komponentu.
+Teraz pozostaje nam już tylko uzyskanie fabryki komponentów. Gotową do działania fabrykę najlepiej uzyskać z obiektu _ComponentFactoryResolver_. Sam komponent możemy bez problemu wstrzyknąć z kontekstu _DI_, a następnie wywołać na nim metodę _resolveComponentFactory_, podając interesującą nas klasę komponentu.
 
 ```javascript
 @Component(...)
@@ -127,7 +127,7 @@ W ten sposób możliwe jest stworzenie dowolnego komponentu osiągalnego z konte
 
 ### Sprzątanie po komponencie
 
-Przy ręcznym tworzenie komponentów warto też pamiętać o poprawnym zamknięciu utworzonych obiektów, w tym celu możemy wykorzystać fazę _ngOnDestroy_ cyklu życia komponentów.
+Przy ręcznym tworzeniu komponentów warto też pamiętać o poprawnym zamknięciu utworzonych obiektów. W tym celu możemy wykorzystać fazę _ngOnDestroy_ cyklu życia komponentu.
 
 ```javascript
 @Component(...)
@@ -144,7 +144,7 @@ class AppComponent implements OnDestroy {
 
 ### Definiowanie dynamicznych komponentów w kontekście _DI_
 
-Kolejna rzecz o której musimy pamiętać, to odpowiednie oznaczenie komponentów tworzonych dynamicznie na poziomie definicji kontekstu _DI_. Standardowo Angular generuje kod jedynie dla tych komponentów które dla których zostały zdefiniowane referencje w kodzie. Takie referencje są tworzone automatycznie dla komponentów użytych w ramach metody bootstrap, w routingu, czy też po użyciu w szablonach widoków. Wszystkie pozostałe komponenty, nawet jeżeli zostałe zdefiniowane w sekcji _declarations_, zostaną pominięte - dzięki temu mechanizm _tree shaking_ będzie miał możliwość pominąć je przy budowaniu produkcyjnej wersji kodu. Komponenty dodawane dynamicznie musimy sami wskazać jawnie, na poziomie definicji modułu. W tym celu używamy pola _entryComponents_ dekoratora _@NgModule_.
+Kolejna rzecz, o której musimy pamiętać, to odpowiednie oznaczenie komponentów tworzonych dynamicznie na poziomie definicji kontekstu _DI_. Standardowo Angular generuje kod jedynie dla tych komponentów, dla których zostały zdefiniowane referencje w kodzie. Takie referencje są tworzone automatycznie dla komponentów użytych w ramach metody bootstrap, w routingu, czy też po użyciu w szablonach widoków. Wszystkie pozostałe komponenty, nawet jeżeli zostały zdefiniowane w sekcji _declarations_, zostaną pominięte - dzięki temu mechanizm _tree shaking_ będzie miał możliwość pominąć je przy budowaniu produkcyjnej wersji kodu. Komponenty dodawane dynamicznie musimy sami wskazać jawnie, na poziomie definicji modułu. W tym celu używamy pola _entryComponents_ dekoratora _@NgModule_.
 
 ```javascript
 @NgModule({
@@ -157,9 +157,9 @@ export class ItemDetailsModule {
 }
 ```
 
-### Przekazwanie wartości do i z dynamicznego komponentu
+### Przekazywanie wartości do i z dynamicznego komponentu
 
-Ostatnią rzeczą, na którą warto zwrócić uwagę, jest przekazywanie wartości do i z komponentu. W przypadku ręcznego dodawania komponentów do _DOM_ nie możemy skorzystać ze standardowego przekazywania wartości przez dekoratory _@Input()_ i _@Output()_. Komunikację z komponentem musimy oprogramować ręcznie. Jednak nie jest to trudne, bo obiekt _ComponentRef_ zawiera referencję na faktyczną intancję stworzonego obiektu. Wykorzystując ją możemy zarówno ustawić wartości, jak i nasłuchiwać na zmiany.
+Ostatnią rzeczą, na którą warto zwrócić uwagę, jest przekazywanie wartości do i z komponentu. W przypadku ręcznego dodawania komponentów do _DOM_ nie możemy skorzystać ze standardowego przekazywania wartości przez dekoratory _@Input()_ i _@Output()_. Komunikację z komponentem musimy oprogramować ręcznie. Jednak nie jest to trudne, bo obiekt _ComponentRef_ zawiera referencję na faktyczną instancję stworzonego komponentu. Wykorzystując ją możemy zarówno ustawić wartości, jak i nasłuchiwać na zmiany.
 
 ```javascript
 @Component(...)
@@ -178,7 +178,7 @@ class AppComponent implements AfterViewInit {
 
 ### Kompletny przykład
 
-Na koniec komplety kod źródłowy omawianego przykładu.
+Na koniec kompletny kod źródłowy omawianego przykładu.
 
 _Komponent wrappera kontrolek_
 ```javascript
