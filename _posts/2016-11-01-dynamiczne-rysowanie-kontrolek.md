@@ -10,7 +10,7 @@ Od pewnego czasu pracuję nad świeżym projektem opartym o Angular 2. Części�
 
 Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej... Komponenty określają selektory, którymi możemy je osadzać oraz szablony HTML opisujące sposób prezentacji. Korzystając z tego zestawu, w kolejnych szablonach osadzamy kolejne komponenty wykorzystując ich selektory, zupełnie jakby były to natywne elementy HTMLa.
 
-Co jednak, jeżeli nie jesteśmy w stanie ustalić konkretnego komponentu na etapie pisania aplikacji, a dopiero w trakcie jej wykonania? Musimy wymyślić coś kreatywnego :wink:.
+Co jednak, jeżeli nie jesteśmy w stanie ustalić konkretnego komponentu na etapie pisania aplikacji, a dopiero w trakcie jej wykonania? Musimy wymyślić coś kreatywnego :wink:
 
 ## Szybkie rozwiązanie
 
@@ -44,6 +44,8 @@ Kolejny, być może nawet bardziej narzucający się problem, to wypłynięcie w
 
 A co gdybyśmy mogli przenieść logikę wyboru komponentu do klasy? I dodatkowo wskazać w szablonie, gdzie komponent ma zostac wyrenderowany? Nadal nie tracąc niczego z komponentowego podejścia, w tym wstrzykiwania zależności? Dokładnie tak możemy to zrobić :wink:
 
+### Przygotowanie szablonu widoku
+
 W pierwszym kroku przerobimy szablon komponentu:
 
 ```javascript
@@ -69,6 +71,8 @@ class AppComponent {
 ```
 
 Stosując dekorator _@ViewChild_ wstrzykujemy element _DOMu_ do kontrolera komponentu. Pierwszy parametr może przyjąć klasę oczekiwanego elementu lub selektor. Dodatkowo przekazujemy, jakiej klasy element nas interesuje. W przypadku wstrzykiwania po selektorze standardowo jest to obiekt klasy _ElementRef_, nas jednak interesuje obiekt typu _ViewContainerRef_.
+
+### Tworzenie komponentów w locie
 
 Klasa _ViewContainerRef_ jest o tyle ciekawa, że dostarcza metodę pozwalającą tworzyć komponenty w locie na podstawie dostarczonej fabryki:
 
@@ -99,6 +103,8 @@ class AppComponent implements AfterViewInit {
 }
 ```
 
+### Pobieranie fabryki komponentów
+
 Teraz pozostaje nam już tylko uzyskanie fabryki komponentów. Gotową do działania fabrykę najlepiej uzyskać z obiektu _ComponentFactoryResolver_. Sam komponent bez problemu wstrzyknąć z kontekstu _DI_, a następnie wywołać na nim metodę _resolveComponentFactory_ podając interesującą nas klasę komponentu.
 
 ```javascript
@@ -117,7 +123,11 @@ class AppComponent implements OnInit {
 }
 ```
 
-W ten sposób możliwe jest stworzenie dowolnego komponentu osiągalnego z kontekstu _DI_ aplikacji. Przy ręcznym tworzenie komponentów warto też pamiętać o poprawnym zamknięciu utworzonych obiektów, w tym celu możemy wykorzystać fazę _ngOnDestroy_ cyklu życia komponentów.
+W ten sposób możliwe jest stworzenie dowolnego komponentu osiągalnego z kontekstu _DI_ aplikacji.
+
+### Sprzątanie po komponencie
+
+Przy ręcznym tworzenie komponentów warto też pamiętać o poprawnym zamknięciu utworzonych obiektów, w tym celu możemy wykorzystać fazę _ngOnDestroy_ cyklu życia komponentów.
 
 ```javascript
 @Component(...)
@@ -132,7 +142,9 @@ class AppComponent implements OnDestroy {
 }
 ```
 
-Ostatnia rzecz o której musimy pamiętać to odpowiednie oznaczenie komponentów tworzonych dynamicznie na poziomie definicji kontekstu _DI_. Standardowo Angular generuje kod jedynie dla tych komponentów które dla których zostały zdefiniowane referencje w kodzie. Takie referencje są tworzone automatycznie dla komponentów użytych w ramach metody bootstrap, w routingu, czy też po użyciu w szablonach widoków. Wszystkie pozostałe komponenty, nawet jeżeli zostałe zdefiniowane w sekcji _declarations_, zostaną pominięte - dzięki temu mechanizm _tree shaking_ będzie miał możliwość pominąć je przy budowaniu produkcyjnej wersji kodu. Komponenty dodawane dynamicznie musimy sami wskazać jawnie, na poziomie definicji modułu. W tym celu używamy pola _entryComponents_ dekoratora _@NgModule_.
+### Definiowanie dynamicznych komponentów w kontekście _DI_
+
+Kolejna rzecz o której musimy pamiętać, to odpowiednie oznaczenie komponentów tworzonych dynamicznie na poziomie definicji kontekstu _DI_. Standardowo Angular generuje kod jedynie dla tych komponentów które dla których zostały zdefiniowane referencje w kodzie. Takie referencje są tworzone automatycznie dla komponentów użytych w ramach metody bootstrap, w routingu, czy też po użyciu w szablonach widoków. Wszystkie pozostałe komponenty, nawet jeżeli zostałe zdefiniowane w sekcji _declarations_, zostaną pominięte - dzięki temu mechanizm _tree shaking_ będzie miał możliwość pominąć je przy budowaniu produkcyjnej wersji kodu. Komponenty dodawane dynamicznie musimy sami wskazać jawnie, na poziomie definicji modułu. W tym celu używamy pola _entryComponents_ dekoratora _@NgModule_.
 
 ```javascript
 @NgModule({
@@ -144,6 +156,8 @@ Ostatnia rzecz o której musimy pamiętać to odpowiednie oznaczenie komponentó
 export class ItemDetailsModule {
 }
 ```
+
+### Przekazwanie wartości do i z dynamicznego komponentu
 
 Ostatnią rzeczą, na którą warto zwrócić uwagę, jest przekazywanie wartości do i z komponentu. W przypadku ręcznego dodawania komponentów do _DOM_ nie możemy skorzystać ze standardowego przekazywania wartości przez dekoratory _@Input()_ i _@Output()_. Komunikację z komponentem musimy oprogramować ręcznie. Jednak nie jest to trudne, bo obiekt _ComponentRef_ zawiera referencję na faktyczną intancję stworzonego obiektu. Wykorzystując ją możemy zarówno ustawić wartości, jak i nasłuchiwać na zmiany.
 
@@ -161,6 +175,8 @@ class AppComponent implements AfterViewInit {
     
 }
 ```
+
+### Kompletny przykład
 
 Na koniec komplety kod źródłowy omawianego przykładu.
 
