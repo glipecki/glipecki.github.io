@@ -3,7 +3,7 @@ layout: post
 published: false
 tags:
   - angular
-title: Dynamiczne tworzenie kontrolek
+title: Dynamiczne tworzenie kontrolek w Angular 2
 ---
 
 Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej...
