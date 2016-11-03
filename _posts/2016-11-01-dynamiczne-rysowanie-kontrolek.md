@@ -3,7 +3,7 @@ layout: post
 published: false
 tags:
   - angular
-title: Dynamiczne tworzenie kontrolek w Angular 2
+title: Dynamiczne dodawanie komponentów w Angular 2
 ---
 
 Od pewnego czasu pracuję nad świeżym projektem opartym o Angular 2. Częścią projektu jest prezentowanie użytkownikowi dynamicznie generowanych elementów interfejsu. Nie jesteśmy w stanie zaprojektować z wyprzedzeniem ekranów, nie znając ani ich struktury, ani konkretnych kontrolek.
