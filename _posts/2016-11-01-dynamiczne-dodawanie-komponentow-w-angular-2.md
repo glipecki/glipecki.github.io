@@ -6,6 +6,7 @@ tags:
 title: Dynamiczne dodawanie komponentów w Angular 2
 ---
 
+
 Od pewnego czasu pracuję nad świeżym projektem opartym o Angular 2. Częścią projektu jest prezentowanie użytkownikowi dynamicznie generowanych elementów interfejsu. Nie jesteśmy w stanie zaprojektować z wyprzedzeniem ekranów, nie znając ani ich struktury, ani konkretnych kontrolek.
 
 Standardowo aplikację budujemy korzystając z komponentów używających komponentów, które używają komponentów, i tak dalej... Komponenty określają selektory, którymi możemy je osadzać oraz szablony HTML opisujące sposób prezentacji. Korzystając z tego zestawu, w kolejnych szablonach osadzamy kolejne komponenty wykorzystując ich selektory, zupełnie jakby były to natywne elementy HTMLa.
@@ -32,7 +33,7 @@ Spójrzmy na przykład:
 class AppComponent {}
 ```
     
-Na pierwszy rzut oka wszystko wygląda nieźle - w zależności od typu prezentowanego obiektu potrafimy wyświetlić odpowiedni komponent prezentujący szczegóły. Nawet jesteśmy z siebie zadowoleni, w końcu mamy komponenty, a przecież mogliśmy zaszyć prezentację typów bezpośrednio w szablonie.
+Na pierwszy rzut oka wszystko wygląda nieźle - w zależności od typu prezentowanego obiektu potrafimy wyświetlić odpowiedni komponent prezentujący szczegóły. Nawet jesteśmy z siebie zadowoleni, w końcu mamy komponenty, a przecież mogliśmy zaszyć prezentację typów bezpośrednio w szablonie :wink:
 
 Spójrzmy jednak krytycznie na nasz twór, a zauważymy potencjalne problemy.
 
@@ -42,7 +43,7 @@ Kolejny, być może nawet bardziej narzucający się problem, to wypłynięcie w
 
 ## Lepsze podejście
 
-A co gdybyśmy mogli przenieść logikę wyboru komponentu do klasy? I dodatkowo wskazać w szablonie, gdzie komponent ma zostac wyrenderowany? Nadal nie tracąc niczego z komponentowego podejścia, w tym wstrzykiwania zależności? Dokładnie tak możemy to zrobić!
+A co gdybyśmy mogli przenieść logikę wyboru komponentu do klasy? I dodatkowo wskazać w szablonie, gdzie komponent ma zostac wyrenderowany? Nadal nie tracąc niczego z komponentowego podejścia, w tym wstrzykiwania zależności? Dokładnie tak możemy to zrobić :wink:
 
 ### Przygotowanie szablonu widoku
 
@@ -268,7 +269,7 @@ export class ItemDetailsModule {
 
 ## tl;dr
 
-Wykorzystując najnowszą wersję frameworka Angular 2 możemy bez problemu tworzyć elementy interfejsu w locie, w trakcie działania aplikacji. Używając serwisu _ComponentFactoryResolver_ i adnotacji _@ViewChild_ można programowo tworzyć i dodawać komponenty do DOM, bez potrzeby zmieniania szablonów HTML komponentów.
+Wykorzystując najnowszą wersję frameworka Angular 2 możemy bez problemu tworzyć elementy interfejsu w locie, w trakcie działania aplikacji. Serwis _ComponentFactoryResolver_ i adnotacja _@ViewChild_ pozwalają programowo tworzyć i dodawać komponenty do drzewa DOM, bez potrzeby zmieniania szablonów HTML komponentów.
 
 ## Źródła
 
