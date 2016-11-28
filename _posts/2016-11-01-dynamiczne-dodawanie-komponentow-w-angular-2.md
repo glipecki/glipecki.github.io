@@ -42,7 +42,7 @@ Kolejny, być może nawet bardziej narzucający się problem, to wypłynięcie w
 
 ## Lepsze podejście
 
-A co gdybyśmy mogli przenieść logikę wyboru komponentu do klasy? I dodatkowo wskazać w szablonie, gdzie komponent ma zostac wyrenderowany? Nadal nie tracąc niczego z komponentowego podejścia, w tym wstrzykiwania zależności? Dokładnie tak możemy to zrobić :wink:
+A co gdybyśmy mogli przenieść logikę wyboru komponentu do klasy? I dodatkowo wskazać w szablonie, gdzie komponent ma zostac wyrenderowany? Nadal nie tracąc niczego z komponentowego podejścia, w tym wstrzykiwania zależności? Dokładnie tak możemy to zrobić!
 
 ### Przygotowanie szablonu widoku
 
