@@ -268,7 +268,7 @@ export class ItemDetailsModule {
 
 ## tl;dr
 
-Wykorzystując najnowszą wersję frameworka Angular 2 możemy bez problemu tworzyć elementy interfejsu w locie, w trakcie działania aplikacji. Używając serwisu _ComponentFactoryResolver_ i adnotacji _@ViewChild_ możemy tworzyć i dodawać do DOM komponenty utworzone programowo, bez potrzeby zmieniania szablonów HTML komponentów.
+Wykorzystując najnowszą wersję frameworka Angular 2 możemy bez problemu tworzyć elementy interfejsu w locie, w trakcie działania aplikacji. Używając serwisu _ComponentFactoryResolver_ i adnotacji _@ViewChild_ można programowo tworzyć i dodawać komponenty do DOM, bez potrzeby zmieniania szablonów HTML komponentów.
 
 ## Źródła
 
