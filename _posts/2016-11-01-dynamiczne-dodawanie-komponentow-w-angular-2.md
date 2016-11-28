@@ -32,7 +32,7 @@ Spójrzmy na przykład:
 class AppComponent {}
 ```
     
-Na pierwszy rzut oka wszystko wygląda nieźle - w zależności od typu prezentowanego obiektu potrafimy wyświetlić odpowiedni komponent prezentujący szczegóły. Nawet jesteśmy z siebie zadowoleni, w końcu mamy komponenty, a przecież mogliśmy zaszyć prezentację typów bezpośrednio w szablonie :wink:
+Na pierwszy rzut oka wszystko wygląda nieźle - w zależności od typu prezentowanego obiektu potrafimy wyświetlić odpowiedni komponent prezentujący szczegóły. Nawet jesteśmy z siebie zadowoleni, w końcu mamy komponenty, a przecież mogliśmy zaszyć prezentację typów bezpośrednio w szablonie.
 
 Spójrzmy jednak krytycznie na nasz twór, a zauważymy potencjalne problemy.
 
