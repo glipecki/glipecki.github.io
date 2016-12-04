@@ -22,12 +22,12 @@ export class Service {}
 
 _component.ts_
 
-```typescript
+{% highlight typescript %}
 import {Service} from './service';
 export class Component {
 	private service: Service;
 }
-```
+{% endhighlight %}
 
 ## Problemy z importowaniem zależności
 
