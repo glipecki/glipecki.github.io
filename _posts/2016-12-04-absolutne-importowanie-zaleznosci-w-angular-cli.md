@@ -80,13 +80,6 @@ export class UserDetailsService {
 }
 ```
 
-```javascript
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-```
-
 ## Podsumowanie
 
 Wprowdzenie modularyzacji do standardu ES6 to ogromny krok w stronę poprawy jakości aplikacji. Jednak podawanie względnych ścieżek do zależności może szybko doprowadzić do pogorszenia czytelności kodu i przyprawić niejednego programistę o ból głowy. Na szczęścię kompilator TypeScript pozawala definiować zależności wskazując absolutne ścieżki, wystarczy zdefiniować katalog względem którego chcemy wyszukiwać plików do importowania za pomocą atrybutu _baseUrl_ kompilatora.
