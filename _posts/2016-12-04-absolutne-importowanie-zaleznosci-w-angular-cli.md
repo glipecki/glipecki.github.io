@@ -16,13 +16,18 @@ Przykładowo, możemy zdefiniować zależność pomiędzy modułami:
 
 _service.ts_
 
-```javascript
+```ts
 export class Service {}
 ```
 
 _component.ts_
 
-<script src="https://gist.github.com/glipecki/2acbdc97e1002718c7c01a3a04ba210d.js"></script>
+```ts
+import {Service} from './service';
+export class Component {
+	private service: Service;
+}
+```
 
 ## Problemy z importowaniem zależności
 
@@ -43,7 +48,7 @@ Wówczas zawartość pliku _user-details.component.ts_ mogłaby wyglądać:
 
 _component.ts_
 
-```javascript
+```ts
 import {AuthenticationService} from '../../authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
@@ -68,7 +73,7 @@ W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W
 
 Od teraz możemy we wszystkich miejscach importować zależności podając ich absolutne ścieżki:
 
-```javascript
+```ts
 import {AuthenticationService} from 'authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
