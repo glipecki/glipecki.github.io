@@ -64,7 +64,7 @@ W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W
     "baseUrl": ".",
     "declaration": false,
     "emitDecoratorMetadata": true,
-    ...
+    // ...
   }
 }
 ```
