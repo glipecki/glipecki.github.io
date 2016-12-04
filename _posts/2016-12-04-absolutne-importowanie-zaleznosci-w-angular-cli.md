@@ -15,11 +15,13 @@ Za moduł przyjmuje się pojedyczny plik. Wszystkie elementy w nim zdefiniowane 
 Przykładowo, możemy zdefiniować zależność pomiędzy modułami:
 
 _service.js_
+
 ```javascript
 export class Service {}
 ```
 
 _component.js_
+
 ```javascript
 import {Service} from './service';
 export class Component {
@@ -32,6 +34,7 @@ export class Component {
 Standardowo importowane moduły są wyszukiwane względem importującego pliku. W przypadku nietrywialnej struktury może do doprowadzić do pogroszenia czytelności aplikacji.
 
 Wyobraźmy sobie strukturę kodu:
+
 ```
 src
   \- user
@@ -44,6 +47,7 @@ src
 Wówczas zawartość pliku _user-details.component.js_ mogłaby wyglądać:
 
 _component.js_
+
 ```javascript
 import {AuthenticationService} from '../../authentication/authentication.service';
 export class UserDetailsService {
@@ -58,6 +62,7 @@ Utrzymywanie względnych ścieżek importowanych modułów jest trudne. Czytelno
 Na szczęście zalecane podejście do pisania aplikacji w _Angular 2_ zakłada stosowanie kompilatora _TypeScript_, a ten od dłuższego czasu wspiera stosowanie absolutnych ścieżek przy importowaniu zależności. Dodatkowo, od niedawana, również _Angular CLI_ prawidłowo obsluguje bundlowanie zasobów zbudowanych z wykorzystaniem absolutnych ścieżek.
 
 W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W pliku _tsconfig.json_ dopisujemy atrybut _baseUrl: "."_
+
 ```json
 {
   "compilerOptions": {
@@ -67,6 +72,7 @@ W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W
 ```
 
 Od teraz możemy we wszystkich miejscach importować zależności podając ich absolutne ścieżki:
+
 ```javascript
 import {AuthenticationService} from 'authentication/authentication.service';
 export class UserDetailsService {
