@@ -14,13 +14,13 @@ Za moduł przyjmuje się pojedyczny plik. Wszystkie elementy w nim zdefiniowane 
 
 Przykładowo, możemy zdefiniować zależność pomiędzy modułami:
 
-_service.js_
+_service.ts_
 
 ```javascript
 export class Service {}
 ```
 
-_component.js_
+_component.ts_
 
 ```javascript
 import {Service} from './service';
@@ -39,16 +39,16 @@ Wyobraźmy sobie strukturę kodu:
 src
   \- user
     \- details
-      user-details.component.js
+      user-details.component.ts
   \- authentication
-    \- authentication.service.js
+    \- authentication.service.ts
 ```
 
-Wówczas zawartość pliku _user-details.component.js_ mogłaby wyglądać:
+Wówczas zawartość pliku _user-details.component.ts_ mogłaby wyglądać:
 
-_component.js_
+_component.ts_
 
-```javascript
+```typescript
 import {AuthenticationService} from '../../authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
