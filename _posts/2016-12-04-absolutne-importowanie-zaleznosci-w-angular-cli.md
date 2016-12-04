@@ -16,13 +16,13 @@ Przykładowo, możemy zdefiniować zależność pomiędzy modułami:
 
 _service.ts_
 
-```ts
+```typescript
 export class Service {}
 ```
 
 _component.ts_
 
-```ts
+```typescript
 import {Service} from './service';
 export class Component {
 	private service: Service;
@@ -48,7 +48,7 @@ Wówczas zawartość pliku _user-details.component.ts_ mogłaby wyglądać:
 
 _component.ts_
 
-```ts
+```typescript
 import {AuthenticationService} from '../../authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
@@ -73,7 +73,7 @@ W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W
 
 Od teraz możemy we wszystkich miejscach importować zależności podając ich absolutne ścieżki:
 
-```ts
+```typescript
 import {AuthenticationService} from 'authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
