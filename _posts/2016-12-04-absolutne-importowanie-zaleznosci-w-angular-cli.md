@@ -48,7 +48,7 @@ Wówczas zawartość pliku _user-details.component.ts_ mogłaby wyglądać:
 
 _component.ts_
 
-```typescript
+```javascript
 import {AuthenticationService} from '../../authentication/authentication.service';
 export class UserDetailsService {
 	private service: AuthenticationService;
