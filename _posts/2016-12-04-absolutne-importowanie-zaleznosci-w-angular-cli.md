@@ -22,12 +22,7 @@ export class Service {}
 
 _component.ts_
 
-```javascript
-import {Service} from './service';
-export class Component {
-	private service: Service;
-}
-```
+<script src="https://gist.github.com/glipecki/2acbdc97e1002718c7c01a3a04ba210d.js"></script>
 
 ## Problemy z importowaniem zależności
 
