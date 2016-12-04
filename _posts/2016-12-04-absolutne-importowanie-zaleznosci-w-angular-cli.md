@@ -61,10 +61,7 @@ W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W
 ```json
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    // ...
+    "baseUrl": "."
   }
 }
 ```
