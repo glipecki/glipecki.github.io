@@ -82,7 +82,7 @@ export class UserDetailsService {
 
 ## Podsumowanie
 
-Wprowdzenie modularyzacji do standardu ES6 to ogromny krok w stronę poprawy jakości aplikacji. Jednak podawanie względnych ścieżek do zależności może szybko doprowadzić do pogorszenia czytelności kodu i przyprawić niejednego programistę o ból głowy. Na szczęścię kompilator TypeScript pozawala definiować zależności wskazując absolutne ścieżki, wystarczy zdefiniować katalog względem którego chcemy wyszukiwać plików do importowania za pomocą atrybutu _baseUrl_ kompilatora.
+Wprowdzenie modularyzacji do standardu _ES6_ to ogromny krok w stronę poprawy jakości aplikacji. Jednak podawanie względnych ścieżek do zależności może szybko doprowadzić do pogorszenia czytelności kodu i przyprawić niejednego programistę o ból głowy. Na szczęścię kompilator _TypeScript_ pozawala definiować zależności wskazując absolutne ścieżki, wystarczy zdefiniować katalog względem którego chcemy wyszukiwać plików do importowania za pomocą atrybutu _baseUrl_ kompilatora.
 
 - [Wsparcie dla absolutnych importów w kompilatorze TypeScript](https://github.com/Microsoft/TypeScript/pull/5728)
 - [Wsparcie dla konfiguracji baseUrl w Angular CLI](https://github.com/angular/angular-cli/pull/2470)
