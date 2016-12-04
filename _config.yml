@@ -27,7 +27,7 @@ excerpt_length: 50
 
 timezone: "Europe/Warsaw"
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: /:year-:month-:day-:title/
 paginate: 5
 
