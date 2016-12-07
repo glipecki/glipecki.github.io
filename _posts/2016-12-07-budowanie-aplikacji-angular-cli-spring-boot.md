@@ -423,9 +423,11 @@ demo
 
 Gdzie moduły:
 
-- demo-web - zawiera zasoby aplikacji web
-- demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_
-- demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt
+- demo-web - zawiera zasoby aplikacji web,
+- demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_,
+- demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt.
+
+Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [https://github.com/glipecki/spring-with-angular-cli-demo](spring-with-angular-cli-demo@github).
 
 ## Podsumowanie
 
