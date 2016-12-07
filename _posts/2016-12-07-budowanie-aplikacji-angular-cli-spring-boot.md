@@ -3,11 +3,11 @@ layout: post
 published: false
 title: Budowanie aplikacji Angular CLI + Spring Boot
 ---
-Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest prawda, to na potrzeby tego artykułu przyjmijmy, że tak jest. A jak backend współpracujący z aplikacją webową to REST, a jak rest to Spring i Spring Boot. W kilku kolejnych apakpitach stworzymy i z sukcesem przygotujemy gotowy do wdrożenia artefakt składający się z aplikacji webowej w Angular 2 i backendu usługowego z wykorzystniem Spring Boot.
+Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest prawda, to na potrzeby tego artykułu przyjmijmy, że tak jest. A jak backend współpracujący z aplikacją webową to _REST_, a jak _REST_ to _Spring_ i _Spring Boot_. W kilku kolejnych akapitach stworzymy i z sukcesem przygotujemy gotowy do wdrożenia artefakt składający się z aplikacji webowej w _Angular 2_ i backendu usługowego wykorzystującego _Spring Boot_.
 
 ## Stworzenie minimalnego projektu
 
-Nowy projekt najłatwiej stworzymy wykorzystując Spring Initializer, możemy to zrobić wchodząc [http://start.spring.io/]() i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - curlem.
+Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [http://start.spring.io/]() i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
 
 ```bash
 $ cd demo
@@ -48,7 +48,7 @@ x src/main/resources/application.properties
 x src/test/java/net/lipecki/demo/DemoApplicationTests.java
 ```
 
-W efekcie dostajemy minimalną aplikację Spring Boot, którą możemy zbudować i uruchomić. Do testów dorzućmy prosty kontroler.
+W efekcie dostajemy minimalną aplikację _Spring Boot_, którą możemy zbudować i uruchomić. Do testów dorzućmy prosty kontroler.
 
 ```bash
 $ curl -L https://goo.gl/MbWM8s -o src/main/java/net/lipecki/demo/GreetingRestController.java
@@ -108,21 +108,21 @@ Welcome!
 
 W przypadku najprostszego podejścia wystarczające byłoby dorzucenie tylko kodów części webowej do aktualnego szkieletu i zadbania o jego poprawne budowanie. Jednak dla nas wystarczające to za mało, od razu przygotujemy strukturę która będzie miała szansę wytrzymać próbę czasu.
 
-Minimalny sensony podział to przygotowanie dwóch modułów:
+Minimalny sensowny podział to przygotowanie dwóch modułów:
 
-- moduł artefaktu wdrożeniowego, w tym usługi REST aplikacji,
-- moduł aplikacji webowej.
+- artefaktu wdrożeniowego z usługami REST,
+- aplikacji webowej.
 
 W tym celu:
 
-- dodajemy do projektu dwa moduły
- - demo-app
- - demo-web
-- przenosimy dotychczasową konfigurację budowania i kody do demo-app 
+- dodajemy do projektu dwa moduły,
+ - demo-app,
+ - demo-web,
+- przenosimy dotychczasową konfigurację budowania i kody do demo-app.
 
 Całość zmian możemy zweryfikować w commicie do testowego repozytorium _GitHub_: [https://goo.gl/XvgmU8]().
 
-Po tych zmianach nadal możemy budować i uruchamiać aplikację, jednak tym razem z poziomu modułu demo-app.
+Po tych zmianach, nadal możemy budować i uruchamiać aplikację, jednak tym razem z poziomu modułu demo-app.
 
 ```bash
 $ ./mvnw clean package
@@ -152,7 +152,7 @@ $ java -jar demo-app/target/demo-app-0.0.1-SNAPSHOT.jar
 
 ## Dodanie i budownie części web
 
-Projekt części webowej najłatwiej stworzyć z wykorzystaniem Angular CLI, w tym celu wykonujemy
+Projekt części webowej najłatwiej stworzyć z wykorzystaniem Angular CLI, w tym celu wykonujemy:
 
 ```bash
 $ pwd
@@ -168,15 +168,15 @@ Installed packages for tooling via npm.
 
 Dla tak przygotowanego projektu musimy jeszcze zmienić standardową konfigurację folderu budowania z _dist_ na _target/webapp_: [https://goo.gl/w5plW2]().
 
-W tym momencie możemy już swobodnie pracować z aplikacją uruchamiając ją za pomocą _ng serve_. Kolejnym krokiem będzie zintegrowanie procesu budowania _ng build_ z budowaniem modułu _Maven_. W tym celu wykorzystamy pluginfrontend-maven-plugin.
+W tym momencie możemy już swobodnie pracować z aplikacją uruchamiając ją za pomocą _ng serve_. Kolejnym krokiem będzie zintegrowanie procesu budowania _ng build_ z budowaniem modułu _Maven_. W tym celu wykorzystamy plugin _frontend-maven-plugin_.
 
-Plugin _frontend-maven-plugin_ dostarcza pozwala:
+Plugin _frontend-maven-plugin_ pozwala:
 
-- zainstalować niezależną od systemowej wersję _node_ i _npm_
-- uruchomić instalację zależności _npm_
-- uruchomić budowanie aplikacji za pomocą _ng_
+- zainstalować niezależną od systemowej wersję _node_ i _npm_,
+- uruchomić instalację zależności _npm_,
+- uruchomić budowanie aplikacji za pomocą _ng_.
 
-W tym celu definiujemy trzy elementy _execution_ konfiguracji pluginu.
+Całość konfiguracji wprowadzamy definiując dodatkowe elementy _execution_ konfiguracji pluginu.
 
 Instalowanie node i npm we wskazanej wersji:
 
@@ -192,7 +192,7 @@ Instalowanie node i npm we wskazanej wersji:
 </execution>
 ```
 
-instalowanie zależności _npn_:
+Instalowanie zależności _npn_:
 
 ```xml
 <execution>
@@ -203,7 +203,7 @@ instalowanie zależności _npn_:
 </execution>
 ```
 
-i uruchomienie budowania samej aplikacji:
+Uruchomienie budowania aplikacji:
 
 ```xml
 <execution>
@@ -218,7 +218,7 @@ i uruchomienie budowania samej aplikacji:
 </execution>
 ```
 
-Na sam koniec musimy zdefiniować używany wcześniej skrypt npm - build. W pliku package.json dodajemy:
+Na sam koniec musimy jeszcze zdefiniować używany wcześniej skrypt npm - build. W pliku package.json dodajemy:
 
 ```json
 "scripts": {
@@ -226,13 +226,13 @@ Na sam koniec musimy zdefiniować używany wcześniej skrypt npm - build. W plik
 }
 ```
 
-Tak przygotowana konfiguracja pozwala zbudować część web w trakcie standardowych faz budowania Maven. Dodatkowo dostajemy uspójniony sposób uruchomienia budowania za pomocą polecenia _npm build_. Dzięki wykorzystaniu _frontend-maven-plugin_ uniezależniamy proces budowania od środowiska, wszystkie wymagane biblioteki (_node_, _npm_, _angular-cli_) są instalowane i wykonywane lokalnie w folderze projektu.
+Tak przygotowana konfiguracja pozwala zintegrować budowanie aplikacji web z fazami cyklu życia _Maven_. Dodatkowo dostajemy uspójniony sposób uruchomienia za pomocą polecenia _npm build_. Dzięki wykorzystaniu _frontend-maven-plugin_ uniezależniamy proces budowania od środowiska, wszystkie wymagane biblioteki (_node_, _npm_, _angular-cli_) są instalowane i wykonywane lokalnie w folderze projektu.
 
 Całość zmian z tego kroku możemy obejrzeć w commicie _GitHub_: [https://goo.gl/HgokqV]().
 
 ## Składanie artefaktu z częścią web
 
-Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedycznego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. W tym celu wykorzystamy plugin _maven-assembly-plugin_, dla którego musimy określić wynikową nazwę artefaktu oraz plik opisujący sposób budowania artefaktu.
+Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedycznego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. W tym celu wykorzystamy plugin _maven-assembly-plugin_, dla którego określamu wynikową nazwę artefaktu oraz plik opisujący sposób budowania artefaktu.
 
 Konfiguracja _maven-assembly-plugin_ w _pom.xml_ modułu web:
 
@@ -307,12 +307,13 @@ Definiujemy zależność:
   <dependency>
     <groupId>net.lipecki.vote</groupId>
     <artifactId>vote-web</artifactId>
+    <version>${project.version}</version>
     <type>zip</type>
   </dependency>
 </dependencies>
 ```
 
-i konfigurujemy plugin _maven-dependency-plugin_ tak, żeby zawartość modułu _web_ trafiała do wynikowego artefaktu aplikacji:
+i konfigurujemy plugin _maven-dependency-plugin_ tak, żeby zawartość modułu _web_ trafiała do wynikowego artefaktu:
 
 ```xml
 <build>
@@ -390,13 +391,15 @@ $ curl http://localhost:8080/
 </html>
 ```
 
-Komplet dotychczasowych zmian możemy podsumować w repozytorium: https://goo.gl/AvUldp.
+Komplet dotychczasowych zmian możemy podsumować w repozytorium _GitHub_: https://goo.gl/AvUldp.
 
 ## Obsługa routingu z wykorzystaniem history.pushState (html5 url style)
 
-Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparcie dla nowych sposobów nawigacji aplikacji. Dotychczas aplikacje web można było łatwo rozpoznać po routingu opartym o #... w url. Taki sposób nawigacji nie narzuca żadnych ograniczeń na stronę serwerową aplikacji, jednak tworzy kilka niemożliwych do rozwiązania problemów, np. renderowanie po stronie serwerowej, czy wsparcie dla SEO. Jednak większość nowoczesnych przeglądarek dostarcza nowe _API_ _history.pushState_ pozwalające zrealizować nawigację z pominięciem znaku #. Po szczegóły odsyłam do oficjalnej dokumentacji _Angular_, natomiast w kolejnych akapitach zajmiemy się konfiguracją Spring Boot wspierającą tę strategię nawigacji.
+Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparcie dla nowych sposobów nawigacji. Dotychczas aplikacje web można było łatwo rozpoznać po routingu opartym o #... w url. Taki sposób nawigacji nie narzuca żadnych ograniczeń na stronę serwerową aplikacji, jednak tworzy kilka niemożliwych do rozwiązania problemów, np. renderowanie po stronie serwerowej, czy wsparcie dla SEO.
 
-W założeniu przedstawiony problem możemy uprościć do zwracania treści _index.html_ zawsze wtedy, kiedy standardowo zwrócilibyśmy błąd _404_. Rozwiązanie powinno uwzględniać zarówno istnienie zdefiniowanych w aplikacji mapowań, jak i pobieranie zasobów zdefiniowanych w lokalizacjach zasobów statycznych.
+Obecnie, większość nowoczesnych przeglądarek dostarcza nowe _API_ _history.pushState_ pozwalające zrealizować nawigację z pominięciem znaku #. Po szczegóły odsyłam do oficjalnej dokumentacji _Angular_, natomiast w kolejnych akapitach zajmiemy się konfiguracją Spring Boot wspierającą tę strategię.
+
+W założeniu przedstawiony problem możemy uprościć do zwracania treści _index.html_ zawsze wtedy, kiedy standardowo zwrócilibyśmy błąd _404_. Rozwiązanie powinno uwzględniać zarówno istnienie zdefiniowanych w aplikacji mapowań, jak i pobieranie zasobów dostępnych w lokalizacjach zasobów statycznych.
 
 Najprostszym rozwiązaniem jest zdefiniowanie własnego _ErrorViewResolver_, który dla błędów _404_ wykona przekierowanie na zasób _/index.html_.
 
@@ -408,11 +411,11 @@ public ErrorViewResolver customErrorViewResolver() {
 }
 ```
 
-Wykorzystanie własnego _ErrorViewResolver_ dodatkowo zapewnia nam wsparcie dla rozróżniania żądań na podstawie nagłówka _HTTP_ _produces_. To znaczy, że żadania z przeglądarki (zawierające produces = "text/html") zostaną obsłużone zawartością zasobu _/index.html_, natomiast pozostałe (np. curl) odpowiedzą standardowym błędem _404_.
+Wykorzystanie własnego _ErrorViewResolver_ dodatkowo zapewnia nam wsparcie dla rozróżniania żądań na podstawie nagłówka _HTTP_ _produces_. To znaczy, że żądania z przeglądarek (zawierające produces = "text/html") zostaną obsłużone zawartością zasobu _/index.html_, natomiast pozostałe (np. curl) odpowiedzą standardowym błędem _404_.
 
 ## Możliwe rozszerzenia
 
-Wartym rozważenia rozszerzeniem projektu może być wydzielenie trzeciego modułu i podzielenie aplikacji na:
+Wartym rozważenia rozszerzeniem projektu może być wydzielenie trzeciego modułu i podzielenie dodatkowe aplikacji:
 
 ```
 demo
