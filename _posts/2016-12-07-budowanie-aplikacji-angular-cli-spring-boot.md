@@ -1,6 +1,6 @@
 ---
 layout: post
-published: false
+published: true
 title: Budowanie aplikacji Angular CLI + Spring Boot
 ---
 Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest prawda, to na potrzeby tego artykułu przyjmijmy, że tak jest. A jak backend współpracujący z aplikacją webową to _REST_, a jak _REST_ to _Spring_ i _Spring Boot_. W kilku kolejnych akapitach stworzymy i z sukcesem przygotujemy gotowy do wdrożenia artefakt składający się z aplikacji webowej w _Angular 2_ i backendu usługowego wykorzystującego _Spring Boot_.
