@@ -440,7 +440,7 @@ Część kliencką uruchamiamy przez _ng serve_, dzięki temu dostajemy kompilac
 
 Przy takiej konfiguracji aplikacja webowa jest dostępna na porcie _4200_, a backend _REST_ na porcie _8080_. Musimy jeszcze umożliwić dostęp do usług _REST_ w sposób identyczny z docelowym, w tym celu na porcie _4200_ skonfigurujemy proxy do usług.
 
-Definujemy plik mapowań proxy:
+Tworzymy plik mapowań proxy w _demo-web/proxy.conf.json_:
 
 ```json
 {
