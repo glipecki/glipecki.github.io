@@ -120,8 +120,8 @@ Taki podział aplikacja pozwala nam na dodatkową separację części _backend_ 
 W tym celu:
 
 - dodajemy do projektu dwa moduły,
- - demo-app,
- - demo-web,
+  - demo-app,
+  - demo-web,
 - przenosimy dotychczasową konfigurację budowania i kody do demo-app.
 
 Całość zmian możemy zweryfikować w commicie do testowego repozytorium _GitHub_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/2ee4efcdddf5c6f68e9191607a429f574f58e371).
