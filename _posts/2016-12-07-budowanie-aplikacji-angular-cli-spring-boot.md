@@ -115,6 +115,8 @@ Minimalny sensowny podział to przygotowanie dwóch modułów:
 - artefaktu wdrożeniowego z usługami REST,
 - aplikacji webowej.
 
+Taki podział aplikacja pozwala nam na dodatkową separację części _backend_ i _frontend_.
+
 W tym celu:
 
 - dodajemy do projektu dwa moduły,
@@ -427,7 +429,7 @@ Wykorzystanie własnego _ErrorViewResolver_ dodatkowo zapewnia nam wsparcie dla 
 
 ## Możliwe rozszerzenia
 
-Wartym rozważenia rozszerzeniem projektu może być wydzielenie trzeciego modułu i podzielenie dodatkowe aplikacji:
+Wartym rozważenia rozszerzeniem projektu może być wydzielenie trzeciego modułu i dodatkowe podzielenie aplikacji:
 
 ```
 demo
@@ -442,7 +444,8 @@ Gdzie moduły:
 - demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_,
 - demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt.
 
-Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
+Przy takim podziale uzyskujemy dużą separację pomiędzy modułami. Część _backend_ odpowiedzialna ze udostępnienie usług _REST_ jest całkowicie niezależna od modułu _demo-web_. Moduł _demo-web_ także nie ma żadnej zależności. To oznacza, że możemy je rozwijać, wersjonować oraz osadzać rozdzielnie. Dodatkowo wprowawadzenie modułu _app_ pozwala pisać usługi _REST_ w oderwaniu od produkcyjnego osadzania, np. możliwe jest lokalne uruchamianie modułu _demo-rest_ jako fat jar z _Jetty_, podczas gdy produkcyjnie moduł _demo-app_ będzie osadzany jako _war_ na _Tomcat_.
+
 
 ## Codzienna praca z aplikacją
 
@@ -484,6 +487,8 @@ W ten sposób pracujemy z aplikacją wystawioną pod adresem http://localhost:42
 ## Podsumowanie
 
 Jeżeli na codzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ich integracja z aplikacjami pisanymi w _Angular CLI_ nie będzie stanowić dużego wyzwania. W podstawowej realizacji pomoże Ci plugin _maven-frontend-plugin_, natomiast wykorzystując dodatkowo _maven-assembly-plugin_ i _maven-dependency-plugin_ możliwe jest przygotowanie dużo bardziej złożonych procesów budowania aplikacji.
+
+Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
 ## Materiały
 - https://github.com/glipecki/spring-with-angular-cli-demo
