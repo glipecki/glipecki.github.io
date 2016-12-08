@@ -444,7 +444,7 @@ Gdzie moduły:
 - demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_,
 - demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt.
 
-Przy takim podziale uzyskujemy dużą separację pomiędzy modułami. Część _backend_ odpowiedzialna ze udostępnienie usług _REST_ jest całkowicie niezależna od modułu _demo-web_. Moduł _demo-web_ także nie ma żadnej zależności. To oznacza, że możemy je rozwijać, wersjonować oraz osadzać rozdzielnie. Dodatkowo wprowawadzenie modułu _app_ pozwala pisać usługi _REST_ w oderwaniu od produkcyjnego osadzania, np. możliwe jest lokalne uruchamianie modułu _demo-rest_ jako fat jar z _Jetty_, podczas gdy produkcyjnie moduł _demo-app_ będzie osadzany jako _war_ na _Tomcat_.
+Przy takim podziale uzyskujemy dużą separację pomiędzy modułami. Część _backend_ odpowiedzialna ze udostępnienie usług _REST_ i jest całkowicie niezależna od modułu _demo-web_. Moduł _demo-web_ także nie ma żadnej zależności. To oznacza, że możemy je rozwijać, wersjonować oraz osadzać rozdzielnie. Dodatkowo wprowawadzenie modułu _app_ pozwala pisać usługi _REST_ w oderwaniu od produkcyjnego osadzania, np. możliwe jest lokalne uruchamianie modułu _demo-rest_ jako _fat jar_ z _Jetty_, podczas gdy produkcyjnie moduł _demo-app_ będzie osadzany jako _war_ na _Tomcat_.
 
 
 ## Codzienna praca z aplikacją
