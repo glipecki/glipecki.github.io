@@ -488,7 +488,7 @@ W ten sposób pracujemy z aplikacją wystawioną pod adresem http://localhost:42
 
 Jeżeli na codzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ich integracja z aplikacjami pisanymi w _Angular CLI_ nie będzie stanowić dużego wyzwania. W podstawowej realizacji pomoże Ci plugin _maven-frontend-plugin_, natomiast wykorzystując dodatkowo _maven-assembly-plugin_ i _maven-dependency-plugin_ możliwe jest przygotowanie dużo bardziej złożonych procesów budowania aplikacji.
 
-Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
+Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
 ## Materiały
 - https://github.com/glipecki/spring-with-angular-cli-demo
