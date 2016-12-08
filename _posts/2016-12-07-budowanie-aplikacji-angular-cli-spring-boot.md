@@ -7,7 +7,7 @@ Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest pra
 
 ## Stworzenie minimalnego projektu
 
-Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [](http://start.spring.io/) i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
+Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [http://start.spring.io/](http://start.spring.io/) i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
 
 ```bash
 $ cd demo
