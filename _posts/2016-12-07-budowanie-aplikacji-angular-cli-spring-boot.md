@@ -432,6 +432,14 @@ Gdzie moduły:
 
 Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
+## Jak pracować z aplikacją
+
+draft...
+
+- proxy
+- ng serve
+- backend
+
 ## Podsumowanie
 
 Jeżeli na codzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ich integracja z aplikacjami pisanymi w _Angular CLI_ nie będzie stanowić dużego wyzwania. W podstawowej realizacji pomoże Ci plugin _maven-frontend-plugin_, natomiast wykorzystując dodatkowo _maven-assembly-plugin_ i _maven-dependency-plugin_ możliwe jest przygotowanie dużo bardziej złożonych procesów budowania aplikacji.
