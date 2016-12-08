@@ -491,6 +491,6 @@ Jeżeli na codzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ic
 Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
 ## Materiały
-- https://github.com/glipecki/spring-with-angular-cli-demo
-- http://www.consdata.pl/blog/7-szybki-start-z-angular-cli
-- https://angular.io/docs/ts/latest/guide/router.html#!#browser-url-styles
+- [https://github.com/glipecki/spring-with-angular-cli-demo](https://github.com/glipecki/spring-with-angular-cli-demo)
+- [http://www.consdata.pl/blog/7-szybki-start-z-angular-cli](http://www.consdata.pl/blog/7-szybki-start-z-angular-cli)
+- [https://angular.io/docs/ts/latest/guide/router.html#!#browser-url-styles](https://angular.io/docs/ts/latest/guide/router.html#!#browser-url-styles)
