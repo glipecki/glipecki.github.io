@@ -432,13 +432,40 @@ Gdzie moduły:
 
 Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
-## Jak pracować z aplikacją
+## Codzienna praca z aplikacją
 
-draft...
+Pełnię możliwości duetu Spring Boot i Angular CLI poczujemy dopiero odpowiednio przygotowując środowisko codziennej pracy.
 
-- proxy
-- ng serve
-- backend
+Część kliencką uruchamiamy przez _ng serve_, dzięki temu dostajemy kompilację i budowanie aplikacji po każdej zmianie kodów źródłowych oraz dodatkowo powiadomienia _live reload_ i odświeżanie aplikacji w przeglądarce. Część serwerową uruchamiamy w _IDE_ wspierającym _hot swap_ kodów.
+
+Przy takiej konfiguracji aplikacja webowa jest dostępna na porcie _4200_, a backend _REST_ na porcie _8080_. Musimy jeszcze umożliwić dostęp do usług _REST_ w sposób identyczny z docelowym, w tym celu na porcie _4200_ skonfigurujemy proxy do usług.
+
+Definujemy plik mapowań proxy:
+
+```json
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
+}
+```
+
+Część serwerową uruchamiamy w _IDE_ (lub dowolny inny sposóbw), natomaist część web uruchamiamy przez _Angular CLI_:
+
+```bash
+$ ng serve --proxy-config proxy.conf.json
+ .
+ .
+ .
+webpack: bundle is now VALID.
+$ curl http://localhost:8080/api/greeting && echo
+Welcome!
+$ curl http://localhost:4200/api/greeting && echo
+Welcome!
+```
+
+W ten sposób pracujemy z aplikacją wystawioną pod adresem http://localhost:4200/, a wszystkie zmiany w części serwerowej i webowej możemy mieć odświeżane na bieżąco, zaraz po ich wprowadzeniu.
 
 ## Podsumowanie
 
