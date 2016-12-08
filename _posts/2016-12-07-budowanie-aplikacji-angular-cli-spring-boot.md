@@ -5,6 +5,8 @@ title: Budowanie aplikacji Angular CLI + Spring Boot
 ---
 Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest prawda, to na potrzeby tego artykułu przyjmijmy, że tak jest. A jak backend współpracujący z aplikacją webową to _REST_, a jak _REST_ to _Spring_ i _Spring Boot_. W kilku kolejnych akapitach stworzymy i z sukcesem przygotujemy gotowy do wdrożenia artefakt składający się z aplikacji webowej w _Angular 2_ i backendu usługowego wykorzystującego _Spring Boot_.
 
+_Artykuł zakłada podstawową znajomość Angular CLI, Spring Boot i Maven._
+
 ## Stworzenie minimalnego projektu
 
 Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [http://start.spring.io/](http://start.spring.io/) i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
@@ -69,7 +71,7 @@ public class GreetingRestController {
 }
 ```
 
-Całość możemy już zbudować
+Całość możemy zbudować wykorzystując _Maven_. W zależności od preferencji możemy zbudować aplikację wykorzystując globalnie zainstalowaną w systemi instancję lub skorzystać z dostarczanego ze szkieletem _Maven Wrappera_. Stosowanie _Wrappera_ pozwala pracować z aplikacją nie zmieniając zainstalowanych w systemie pakietów oraz zapewnia, że możemy różne projekty budować różnymi wersjami _Mavena_. _Wrapper_ w razie potrzeby ściągnie odpowiednią wersję bibliotek przy pierwszym uruchomieniu.
 
 ```bash
 ./mvnw clean package
@@ -166,7 +168,7 @@ Installing packages for tooling via npm.
 Installed packages for tooling via npm.
 ```
 
-Dla tak przygotowanego projektu musimy jeszcze zmienić standardową konfigurację folderu budowania z _dist_ na _target/webapp_ w _angular-cli.json_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/3edaecb08c40e93d5bf0c24da06f140ecefa0d74).
+Standardowy _Angular CLI_ będzie budował aplikację do folderu _dist_. Jednak konwencja budowania przez _Maven_ zakłada, że wszystkie zasoby, czy to pośrednie, czy docelowe, wygenerowane w trakcie procesu budowania trafią do odpowiednich podfolderów katalogu _target_. Preferowanie konwencji ponad konfigurację to zawsze dobry pomysł. W tym celu zmieniamy standardową konfigurację folderu budowania z _dist_ na _target/webapp_ w _angular-cli.json_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/3edaecb08c40e93d5bf0c24da06f140ecefa0d74).
 
 W tym momencie możemy już swobodnie pracować z aplikacją uruchamiając ją za pomocą _ng serve_. Kolejnym krokiem będzie zintegrowanie procesu budowania _ng build_ z budowaniem modułu _Maven_. W tym celu wykorzystamy plugin _frontend-maven-plugin_.
 
@@ -178,7 +180,7 @@ Plugin _frontend-maven-plugin_ pozwala:
 
 Całość konfiguracji wprowadzamy definiując dodatkowe elementy _execution_ konfiguracji pluginu.
 
-Instalowanie node i npm we wskazanej wersji:
+W pierwszym kroku instalujemy wskazaną wersję runtime _node_ i menadżera pakietów _npm_. Całość jest instalowana lokalnie w folderze _target_. Dzięki lokalnej instalacji minimalizujemy listę wymagań wstępnych do pracy z naszym projektem, co jest szczególnie ważne przy wykorzystaniu systemów _CI/CD_.
 
 ```xml
 <execution>
@@ -192,7 +194,7 @@ Instalowanie node i npm we wskazanej wersji:
 </execution>
 ```
 
-Instalowanie zależności _npn_:
+W drugim kroku plugin za pomocą _npm_ instaluje wszystkie zdefiniowane w _package.json_ zależności naszego projektu. Jest to odpowiednik wykonania _npm install_ w katalogu głównym projektu.
 
 ```xml
 <execution>
@@ -203,7 +205,17 @@ Instalowanie zależności _npn_:
 </execution>
 ```
 
-Uruchomienie budowania aplikacji:
+Ostatni krok to wykonanie właściwego procesu budowania aplikacji z wykorzystaniem _Angular CLI_.
+
+W celu uproszczenia konfiguracji dodajemy nowy task o nazwie _build_ w pliku _package.json_. Ręczne zdefiniowanie taska jest o tyle ważne, że w ten sposób będziemy się mogli uniezależnić od systemowej instancji _Angular CLI_ i stosować lokalną wersję zainstalowaną na podstawie definicji w _package.json_. 
+
+```json
+"scripts": {
+  "build": "node node_modules/angular-cli/bin/ng build"
+}
+```
+
+Oraz dodajemy wykonanie nowo utworzonego tasku przez plugin.
 
 ```xml
 <execution>
@@ -218,13 +230,7 @@ Uruchomienie budowania aplikacji:
 </execution>
 ```
 
-Na sam koniec musimy jeszcze zdefiniować używany wcześniej skrypt npm - build. W pliku package.json dodajemy:
-
-```json
-"scripts": {
-  "build": "node node_modules/angular-cli/bin/ng build"
-}
-```
+> Nazwa tasku _build_ jest czysto umowna, jedyne wymaganie to używanie tej samej w _package.json_ i _pom.xml_. Jednak trzymanie się konkretnej konwencji, np. build, ułatwi pracę pomiędzy różnymi projektami.
 
 Tak przygotowana konfiguracja pozwala zintegrować budowanie aplikacji web z fazami cyklu życia _Maven_. Dodatkowo dostajemy uspójniony sposób uruchomienia za pomocą polecenia _npm build_. Dzięki wykorzystaniu _frontend-maven-plugin_ uniezależniamy proces budowania od środowiska, wszystkie wymagane biblioteki (_node_, _npm_, _angular-cli_) są instalowane i wykonywane lokalnie w folderze projektu.
 
@@ -232,9 +238,11 @@ Całość zmian z tego kroku możemy obejrzeć w commicie _GitHub_: [commit](htt
 
 ## Składanie artefaktu z częścią web
 
-Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedycznego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. W tym celu wykorzystamy plugin _maven-assembly-plugin_, dla którego określamu wynikową nazwę artefaktu oraz plik opisujący sposób budowania artefaktu.
+Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedycznego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. 
 
-Konfiguracja _maven-assembly-plugin_ w _pom.xml_ modułu web:
+Standardowo _Maven_ obsługuje najpopularniejsze typy artefaktów, np. _jar_, _war_, _ear_. Dla tych tpów znany jest sposób ich budowania, struktura archiwów jest odgórnie ustalona i niezmienna pomiędzy projektami. Jednak my chcemy przygotować archiwum w postaci pliku _zip_, więc wykorzystując _maven-assembly-plugin_ będziemy mogli sami określić jakie pliki i w jaki sposób zbierać budując wynikowy artefakt.
+
+Do _pom.xml_ modułu _demo-web_ dodajemy definicję _maven-assembly-plugin_ zawierającą docelową nazwę artefaktu oraz plik assembly opisujący sposób jego składania.
 
 ```xml
 <build>
@@ -260,7 +268,7 @@ Konfiguracja _maven-assembly-plugin_ w _pom.xml_ modułu web:
 </build>
 ```
 
-Definicja sposobu budowania artefaktu w _assembly.xml_:
+Następnie dodajemy plik _assembly.xml_ (obok pliku _pom.xml_), w którym określamy docelowy format (_zip_) oraz które pliki, z którego katalogu spakować do artefaktu (wszystkie z folder _target/webapp_).
 
 ```xml
 <assembly>
@@ -300,7 +308,7 @@ Commit zawierający zmiany: [commit](https://github.com/glipecki/spring-with-ang
 
 Ostatnie co musimy zrobić żeby nasza aplikacja składała się w pojedynczy wykonywalny artefakt to skonfigurować moduł _demo-web_ jako zależność w projekcie _demo-app_ oraz skonfigurowanie pluginu _maven-dependency-plugin_, który będzie odpowiadał za odpowiednie rozpakowanie zasobów.
 
-Definiujemy zależność:
+Definiujemy zależność na moduł _demo-web_ w _pom.xml_:
 
 ```xml
 <dependencies>
@@ -313,7 +321,9 @@ Definiujemy zależność:
 </dependencies>
 ```
 
-i konfigurujemy plugin _maven-dependency-plugin_ tak, żeby zawartość modułu _web_ trafiała do wynikowego artefaktu:
+> Standardowo _Maven_ szuka zależności typu _jar_, jednak nasz moduł _web_ jest typu _zip_, co możemy jawnie wskazać definiując zależność.
+
+Aplikacja Spring Boot poza serwowaniem zdefiniowany servletów i usług _REST_ hostuje również wszystkie zasoby, które znajdują się na zdefiniowanych ścieżkach zasobów statycznych. W standardowej konfiguracji, jedną z takich ścieżek są zasoby wewnątrz samego _jara_ aplikacji. Korzystając z tej wiedzy skonfigurujemy plugin _maven-dependency-plugin_ w taki sposób, zeby rozakowywał archiwum modułu _web_ do odpowiedniego katalogu budowania.
 
 ```xml
 <build>
@@ -346,7 +356,7 @@ i konfigurujemy plugin _maven-dependency-plugin_ tak, żeby zawartość modułu 
 </build>
 ```
 
-W tym momencie mamy już gotową kompletną konfigurację budowania aplikacji. Po zbudowaniu i uruchomieniu aplikacji możemy zarówno wywołać testową usługę REST, jak i obejrzeć szkielet aplikacji Angular 2.
+W tym momencie mamy już kompletny proces budowania aplikacji. Po jego wykonaniu i uruchomieniu aplikacji możemy zarówno wywołać testową usługę _REST_, jak i obejrzeć szkielet _Angular 2_.
 
 ```bash
 $ ./mvnw clean package
@@ -398,6 +408,8 @@ Komplet dotychczasowych zmian możemy podsumować w repozytorium _GitHub_: [repo
 Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparcie dla nowych sposobów nawigacji. Dotychczas aplikacje web można było łatwo rozpoznać po routingu opartym o #... w url. Taki sposób nawigacji nie narzuca żadnych ograniczeń na stronę serwerową aplikacji, jednak tworzy kilka niemożliwych do rozwiązania problemów, np. renderowanie po stronie serwerowej, czy wsparcie dla SEO.
 
 Obecnie, większość nowoczesnych przeglądarek dostarcza nowe _API_ _history.pushState_ pozwalające zrealizować nawigację z pominięciem znaku #. Po szczegóły odsyłam do oficjalnej dokumentacji _Angular_, natomiast w kolejnych akapitach zajmiemy się konfiguracją Spring Boot wspierającą tę strategię.
+
+Całość jest o tyle ważna, że nawigacja bez _#_ jest zalecaną przez zespół _Angular 2_ konfiguracją. Przez to jest stosowana zarówna w dokumentacji, oficjalnym guide oraz wszystkich szablonach projektów, w tym również _Angular CLI_. To jednak ozancza, że do serwera usług będą generowane żądania oparte o ścieżki które fizycznie nie są nigdzie zdefiniowane, co zakończy się błędami 404. **W tej sytuacji, bez dostosowania naszego projektu, nie będziemy w stanie w ogóle uruchomić aplikacji oferującej nawigację opartą o routing.**
 
 W założeniu przedstawiony problem możemy uprościć do zwracania treści _index.html_ zawsze wtedy, kiedy standardowo zwrócilibyśmy błąd _404_. Rozwiązanie powinno uwzględniać zarówno istnienie zdefiniowanych w aplikacji mapowań, jak i pobieranie zasobów dostępnych w lokalizacjach zasobów statycznych.
 
