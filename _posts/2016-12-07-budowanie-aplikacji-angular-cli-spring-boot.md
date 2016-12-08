@@ -115,7 +115,7 @@ Minimalny sensowny podział to przygotowanie dwóch modułów:
 - artefaktu wdrożeniowego z usługami REST,
 - aplikacji webowej.
 
-Taki podział aplikacja pozwala nam na dodatkową separację części _backend_ i _frontend_.
+Taki podział aplikacja pozwala nam na dodatkową separację części _backend_ i _frontend_ (w pogoni za ideałem możemy przygotować jeszcze ciekawszą strukturę, szczegóły w jednym z ostatnich akapitów wpisu).
 
 W tym celu:
 
