@@ -7,7 +7,7 @@ Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest pra
 
 ## Stworzenie minimalnego projektu
 
-Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [http://start.spring.io/]() i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
+Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [](http://start.spring.io/) i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
 
 ```bash
 $ cd demo
@@ -120,7 +120,7 @@ W tym celu:
  - demo-web,
 - przenosimy dotychczasową konfigurację budowania i kody do demo-app.
 
-Całość zmian możemy zweryfikować w commicie do testowego repozytorium _GitHub_: [https://github.com/glipecki/spring-with-angular-cli-demo/commit/2ee4efcdddf5c6f68e9191607a429f574f58e371](commit).
+Całość zmian możemy zweryfikować w commicie do testowego repozytorium _GitHub_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/2ee4efcdddf5c6f68e9191607a429f574f58e371).
 
 Po tych zmianach, nadal możemy budować i uruchamiać aplikację, jednak tym razem z poziomu modułu demo-app.
 
@@ -166,7 +166,7 @@ Installing packages for tooling via npm.
 Installed packages for tooling via npm.
 ```
 
-Dla tak przygotowanego projektu musimy jeszcze zmienić standardową konfigurację folderu budowania z _dist_ na _target/webapp_ w _angular-cli.json_: [https://github.com/glipecki/spring-with-angular-cli-demo/commit/3edaecb08c40e93d5bf0c24da06f140ecefa0d74](commit).
+Dla tak przygotowanego projektu musimy jeszcze zmienić standardową konfigurację folderu budowania z _dist_ na _target/webapp_ w _angular-cli.json_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/3edaecb08c40e93d5bf0c24da06f140ecefa0d74).
 
 W tym momencie możemy już swobodnie pracować z aplikacją uruchamiając ją za pomocą _ng serve_. Kolejnym krokiem będzie zintegrowanie procesu budowania _ng build_ z budowaniem modułu _Maven_. W tym celu wykorzystamy plugin _frontend-maven-plugin_.
 
@@ -228,7 +228,7 @@ Na sam koniec musimy jeszcze zdefiniować używany wcześniej skrypt npm - build
 
 Tak przygotowana konfiguracja pozwala zintegrować budowanie aplikacji web z fazami cyklu życia _Maven_. Dodatkowo dostajemy uspójniony sposób uruchomienia za pomocą polecenia _npm build_. Dzięki wykorzystaniu _frontend-maven-plugin_ uniezależniamy proces budowania od środowiska, wszystkie wymagane biblioteki (_node_, _npm_, _angular-cli_) są instalowane i wykonywane lokalnie w folderze projektu.
 
-Całość zmian z tego kroku możemy obejrzeć w commicie _GitHub_: [https://github.com/glipecki/spring-with-angular-cli-demo/commit/03f54e8ad670555e23f45d617b8642d7f8c48a64](commit).
+Całość zmian z tego kroku możemy obejrzeć w commicie _GitHub_: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/03f54e8ad670555e23f45d617b8642d7f8c48a64).
 
 ## Składanie artefaktu z częścią web
 
@@ -294,7 +294,7 @@ $ ls demo-web/target/demo-web-0.0.1-SNAPSHOT.zip
 demo-web/target/demo-web-0.0.1-SNAPSHOT.zip
 ```
 
-Commit zawierający zmiany: [https://github.com/glipecki/spring-with-angular-cli-demo/commit/6e0e6a99badc0ed27846c5a62316fe0ad31d77e4](commit).
+Commit zawierający zmiany: [commit](https://github.com/glipecki/spring-with-angular-cli-demo/commit/6e0e6a99badc0ed27846c5a62316fe0ad31d77e4).
 
 ## Składanie artefaktu wdrożeniowego
 
@@ -391,7 +391,7 @@ $ curl http://localhost:8080/
 </html>
 ```
 
-Komplet dotychczasowych zmian możemy podsumować w repozytorium _GitHub_: [https://github.com/glipecki/spring-with-angular-cli-demo/tree/4042649049dd65bf66e438779c0b8966d57d097f](repozytorium).
+Komplet dotychczasowych zmian możemy podsumować w repozytorium _GitHub_: [repozytorium](https://github.com/glipecki/spring-with-angular-cli-demo/tree/4042649049dd65bf66e438779c0b8966d57d097f).
 
 ## Obsługa routingu z wykorzystaniem history.pushState (html5 url style)
 
@@ -430,7 +430,7 @@ Gdzie moduły:
 - demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_,
 - demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt.
 
-Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [https://github.com/glipecki/spring-with-angular-cli-demo](spring-with-angular-cli-demo@github).
+Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [spring-with-angular-cli-demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
 ## Podsumowanie
 
