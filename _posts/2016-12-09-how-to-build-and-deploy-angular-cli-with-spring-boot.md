@@ -5,7 +5,7 @@ title: How to build and deploy Angular CLI with Spring Boot
 ---
 Every modern web app needs some backend, that's rather bold statement for recent years, but for the sake of simplicity lets assume that's true. If we are talking about backend service for web you probably thought already about REST and if we talk about REST the Spring Boot is obvious framework of choice for many. In this article we will create fresh project based on Spring Boot and Angular CLI. We'll prepare build process for single deployable artifact and see how to use it in everyday work.
 
-_I assume that you already have basic knowledge of Spring Boot, Angular CLI and Maven. If not, please look at useful links at the bottom.
+_I assume that you already have basic knowledge of Spring Boot, Angular CLI and Maven. If not, please look at useful links at the bottom._
 
 ## Minimal working project
 
