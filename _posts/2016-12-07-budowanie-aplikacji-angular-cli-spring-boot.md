@@ -71,7 +71,7 @@ public class GreetingRestController {
 }
 ```
 
-Całość możemy zbudować wykorzystując _Maven_. W zależności od preferencji możemy zbudować aplikację wykorzystując globalnie zainstalowaną w systemi instancję lub skorzystać z dostarczanego ze szkieletem _Maven Wrappera_. Stosowanie _Wrappera_ pozwala pracować z aplikacją nie zmieniając zainstalowanych w systemie pakietów oraz zapewnia, że możemy różne projekty budować różnymi wersjami _Mavena_. _Wrapper_ w razie potrzeby ściągnie odpowiednią wersję bibliotek przy pierwszym uruchomieniu.
+Całość możemy zbudować wykorzystując _Maven_. W zależności od preferencji możemy zbudować aplikację wykorzystując globalnie zainstalowaną w systemie instancję lub skorzystać z dostarczanego ze szkieletem _Maven Wrappera_. Stosowanie _Wrappera_ pozwala pracować z aplikacją nie zmieniając zainstalowanych w systemie pakietów oraz zapewnia, że możemy różne projekty budować różnymi wersjami _Mavena_. _Wrapper_ w razie potrzeby ściągnie odpowiednią wersję bibliotek przy pierwszym uruchomieniu.
 
 ```bash
 ./mvnw clean package
@@ -240,9 +240,9 @@ Całość zmian z tego kroku możemy obejrzeć w commicie _GitHub_: [commit](htt
 
 ## Składanie artefaktu z częścią web
 
-Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedycznego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. 
+Kolejnym krokiem jest umożliwienie spakowania modułu odpowiedzialnego za część web do pojedynczego artefaktu, gotowego do wykorzystania jako zależność lub przesłania do repozytorium artefaktów. 
 
-Standardowo _Maven_ obsługuje najpopularniejsze typy artefaktów, np. _jar_, _war_, _ear_. Dla tych tpów znany jest sposób ich budowania, struktura archiwów jest odgórnie ustalona i niezmienna pomiędzy projektami. Jednak my chcemy przygotować archiwum w postaci pliku _zip_, więc wykorzystując _maven-assembly-plugin_ będziemy mogli sami określić jakie pliki i w jaki sposób zbierać budując wynikowy artefakt.
+Standardowo _Maven_ obsługuje najpopularniejsze typy artefaktów, np. _jar_, _war_, _ear_. Dla tych typów znany jest sposób ich budowania, struktura archiwów jest odgórnie ustalona i niezmienna pomiędzy projektami. Jednak my chcemy przygotować archiwum w postaci pliku _zip_, więc wykorzystując _maven-assembly-plugin_ będziemy mogli sami określić jakie pliki i w jaki sposób zbierać budując wynikowy artefakt.
 
 Do _pom.xml_ modułu _demo-web_ dodajemy definicję _maven-assembly-plugin_ zawierającą docelową nazwę artefaktu oraz plik assembly opisujący sposób jego składania.
 
@@ -315,8 +315,8 @@ Definiujemy zależność na moduł _demo-web_ w _pom.xml_:
 ```xml
 <dependencies>
   <dependency>
-    <groupId>net.lipecki.vote</groupId>
-    <artifactId>vote-web</artifactId>
+    <groupId>net.lipecki.demo</groupId>
+    <artifactId>demo-web</artifactId>
     <version>${project.version}</version>
     <type>zip</type>
   </dependency>
@@ -325,7 +325,7 @@ Definiujemy zależność na moduł _demo-web_ w _pom.xml_:
 
 > Standardowo _Maven_ szuka zależności typu _jar_, jednak nasz moduł _web_ jest typu _zip_, co możemy jawnie wskazać definiując zależność.
 
-Aplikacja Spring Boot poza serwowaniem zdefiniowany servletów i usług _REST_ hostuje również wszystkie zasoby, które znajdują się na zdefiniowanych ścieżkach zasobów statycznych. W standardowej konfiguracji, jedną z takich ścieżek są zasoby wewnątrz samego _jara_ aplikacji. Korzystając z tej wiedzy skonfigurujemy plugin _maven-dependency-plugin_ w taki sposób, zeby rozakowywał archiwum modułu _web_ do odpowiedniego katalogu budowania.
+Aplikacja Spring Boot poza serwowaniem zdefiniowany servletów i usług _REST_ hostuje również wszystkie zasoby, które znajdują się na zdefiniowanych ścieżkach zasobów statycznych. W standardowej konfiguracji, jedną z takich ścieżek są zasoby wewnątrz samego _jara_ aplikacji. Korzystając z tej wiedzy skonfigurujemy plugin _maven-dependency-plugin_ w taki sposób, żeby rozpakowywał archiwum modułu _web_ do odpowiedniego katalogu budowania.
 
 ```xml
 <build>
@@ -411,7 +411,7 @@ Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparci
 
 Obecnie, większość nowoczesnych przeglądarek dostarcza nowe _API_ _history.pushState_ pozwalające zrealizować nawigację z pominięciem znaku #. Po szczegóły odsyłam do oficjalnej dokumentacji _Angular_, natomiast w kolejnych akapitach zajmiemy się konfiguracją Spring Boot wspierającą tę strategię.
 
-Całość jest o tyle ważna, że nawigacja bez _#_ jest zalecaną przez zespół _Angular 2_ konfiguracją. Przez to jest stosowana zarówna w dokumentacji, oficjalnym guide oraz wszystkich szablonach projektów, w tym również _Angular CLI_. To jednak ozancza, że do serwera usług będą generowane żądania oparte o ścieżki które fizycznie nie są nigdzie zdefiniowane, co zakończy się błędami 404. **W tej sytuacji, bez dostosowania naszego projektu, nie będziemy w stanie w ogóle uruchomić aplikacji oferującej nawigację opartą o routing.**
+Całość jest o tyle ważna, że nawigacja bez _#_ jest zalecaną przez zespół _Angular 2_ konfiguracją. Przez to jest stosowana zarówna w dokumentacji, oficjalnym guide oraz wszystkich szablonach projektów, w tym również _Angular CLI_. To jednak oznacza, że do serwera usług będą generowane żądania oparte o ścieżki, które fizycznie nie są nigdzie zdefiniowane, co zakończy się błędami 404. **W tej sytuacji, bez dostosowania naszego projektu, nie będziemy w stanie w ogóle uruchomić aplikacji oferującej nawigację opartą o routing.**
 
 W założeniu przedstawiony problem możemy uprościć do zwracania treści _index.html_ zawsze wtedy, kiedy standardowo zwrócilibyśmy błąd _404_. Rozwiązanie powinno uwzględniać zarówno istnienie zdefiniowanych w aplikacji mapowań, jak i pobieranie zasobów dostępnych w lokalizacjach zasobów statycznych.
 
@@ -444,7 +444,7 @@ Gdzie moduły:
 - demo-rest - zawiera samodzielnie uruchamialną aplikację dostarczającą komplet usług _REST_,
 - demo-app - jest złączeniem modułów web i rest w jeden wykonywalny artefakt.
 
-Przy takim podziale uzyskujemy dużą separację pomiędzy modułami. Część _backend_ odpowiedzialna ze udostępnienie usług _REST_ i jest całkowicie niezależna od modułu _demo-web_. Moduł _demo-web_ także nie ma żadnej zależności. To oznacza, że możemy je rozwijać, wersjonować oraz osadzać rozdzielnie. Dodatkowo wprowawadzenie modułu _app_ pozwala pisać usługi _REST_ w oderwaniu od produkcyjnego osadzania, np. możliwe jest lokalne uruchamianie modułu _demo-rest_ jako _fat jar_ z _Jetty_, podczas gdy produkcyjnie moduł _demo-app_ będzie osadzany jako _war_ na _Tomcat_.
+Przy takim podziale uzyskujemy dużą separację pomiędzy modułami. Część _backend_ odpowiedzialna ze udostępnienie usług _REST_ i jest całkowicie niezależna od modułu _demo-web_. Moduł _demo-web_ także nie ma żadnej zależności. To oznacza, że możemy je rozwijać, wersjonować oraz osadzać rozdzielnie. Dodatkowo wprowadzenie modułu _app_ pozwala pisać usługi _REST_ w oderwaniu od produkcyjnego osadzania, np. możliwe jest lokalne uruchamianie modułu _demo-rest_ jako _fat jar_ z _Jetty_, podczas gdy produkcyjnie moduł _demo-app_ będzie osadzany jako _war_ na _Tomcat_.
 
 
 ## Codzienna praca z aplikacją
@@ -466,7 +466,7 @@ Tworzymy plik mapowań proxy w _demo-web/proxy.conf.json_:
 }
 ```
 
-Część serwerową uruchamiamy w _IDE_ (lub dowolny inny sposóbw), natomaist część web uruchamiamy przez _Angular CLI_:
+Część serwerową uruchamiamy w _IDE_ (lub dowolny inny sposobów), natomiast część web uruchamiamy przez _Angular CLI_:
 
 ```bash
 $ ng serve --proxy-config proxy.conf.json
@@ -486,7 +486,7 @@ W ten sposób pracujemy z aplikacją wystawioną pod adresem http://localhost:42
 
 ## Podsumowanie
 
-Jeżeli na codzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ich integracja z aplikacjami pisanymi w _Angular CLI_ nie będzie stanowić dużego wyzwania. W podstawowej realizacji pomoże Ci plugin _maven-frontend-plugin_, natomiast wykorzystując dodatkowo _maven-assembly-plugin_ i _maven-dependency-plugin_ możliwe jest przygotowanie dużo bardziej złożonych procesów budowania aplikacji.
+Jeżeli na co dzień pracujesz z projektami opartymi o _Spring Boot_ i _Maven_ ich integracja z aplikacjami pisanymi w _Angular CLI_ nie będzie stanowić dużego wyzwania. W podstawowej realizacji pomoże Ci plugin _maven-frontend-plugin_, natomiast wykorzystując dodatkowo _maven-assembly-plugin_ i _maven-dependency-plugin_ możliwe jest przygotowanie dużo bardziej złożonych procesów budowania aplikacji.
 
 Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [demo@github](https://github.com/glipecki/spring-with-angular-cli-demo).
 
