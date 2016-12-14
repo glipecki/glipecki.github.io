@@ -7,6 +7,8 @@ Każda nietrywialna aplikacja potrzebuje backendu. O ile obecnie to nie jest pra
 
 _Artykuł zakłada podstawową znajomość Angular CLI, Spring Boot i Maven._
 
+_Wszystkie przedstawione kroki są commitami do testowego repozytorium, dzięki temu sam możesz prześledzić proces tworzenia aplikacji oraz rozwiać wszelkie wątpliwości. Link do repozytorium: [demo@github](https://github.com/glipecki/spring-with-angular-cli-demo)._
+
 ## Stworzenie minimalnego projektu
 
 Nowy projekt najłatwiej stworzymy wykorzystując _Spring Initializer_, możemy to zrobić wchodząc [http://start.spring.io/](http://start.spring.io/) i wyklikując konfigurację projektu, lub możemy to zrobić w stylu prawdziwego geeka - _curlem_.
@@ -182,6 +184,22 @@ Plugin _frontend-maven-plugin_ pozwala:
 
 Całość konfiguracji wprowadzamy definiując dodatkowe elementy _execution_ konfiguracji pluginu.
 
+Przed dodaniem konfiguracji poszczególnych kroków dodajemy do sekcji _build.plugins_ definicję samego pluginu:
+
+```xml
+<plugin>
+  <groupId>com.github.eirslett</groupId>
+  <artifactId>frontend-maven-plugin</artifactId>
+  <version>1.3</version>
+  <configuration>
+    <installDirectory>target</installDirectory>
+  </configuration>
+  <executions>
+    <!-- tutaj będą konfiguracje kroków budowaia -->
+  </executions>
+</plugin>
+```
+
 W pierwszym kroku instalujemy wskazaną wersję runtime _node_ i menadżera pakietów _npm_. Całość jest instalowana lokalnie w folderze _target_. Dzięki lokalnej instalacji minimalizujemy listę wymagań wstępnych do pracy z naszym projektem, co jest szczególnie ważne przy wykorzystaniu systemów _CI/CD_.
 
 ```xml
@@ -246,28 +264,26 @@ Standardowo _Maven_ obsługuje najpopularniejsze typy artefaktów, np. _jar_, _w
 
 Do _pom.xml_ modułu _demo-web_ dodajemy definicję _maven-assembly-plugin_ zawierającą docelową nazwę artefaktu oraz plik assembly opisujący sposób jego składania.
 
+W sekcji _build.plugins_ dopisujemy:
+
 ```xml
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <descriptor>assembly.xml</descriptor>
-        <finalName>demo-web-${project.version}</finalName>
-        <appendAssemblyId>false</appendAssemblyId>
-      </configuration>
-    <executions>
-      <execution>
-        <phase>package</phase>
-          <goals>
-            <goal>single</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-assembly-plugin</artifactId>
+  <configuration>
+    <descriptor>assembly.xml</descriptor>
+    <finalName>demo-web-${project.version}</finalName>
+    <appendAssemblyId>false</appendAssemblyId>
+  </configuration>
+  <executions>
+    <execution>
+      <phase>package</phase>
+      <goals>
+        <goal>single</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
 ```
 
 Następnie dodajemy plik _assembly.xml_ (obok pliku _pom.xml_), w którym określamy docelowy format (_zip_) oraz które pliki, z którego katalogu spakować do artefaktu (wszystkie z folder _target/webapp_).
@@ -310,52 +326,48 @@ Commit zawierający zmiany: [commit](https://github.com/glipecki/spring-with-ang
 
 Ostatnie co musimy zrobić żeby nasza aplikacja składała się w pojedynczy wykonywalny artefakt to skonfigurować moduł _demo-web_ jako zależność w projekcie _demo-app_ oraz skonfigurowanie pluginu _maven-dependency-plugin_, który będzie odpowiadał za odpowiednie rozpakowanie zasobów.
 
-Definiujemy zależność na moduł _demo-web_ w _pom.xml_:
+Definiujemy zależność na moduł _demo-web_ w _pom.xml_ w sekcji _dependencies_:
 
 ```xml
-<dependencies>
-  <dependency>
-    <groupId>net.lipecki.demo</groupId>
-    <artifactId>demo-web</artifactId>
-    <version>${project.version}</version>
-    <type>zip</type>
-  </dependency>
-</dependencies>
+<dependency>
+  <groupId>net.lipecki.demo</groupId>
+  <artifactId>demo-web</artifactId>
+  <version>${project.version}</version>
+  <type>zip</type>
+</dependency>
 ```
 
 > Standardowo _Maven_ szuka zależności typu _jar_, jednak nasz moduł _web_ jest typu _zip_, co możemy jawnie wskazać definiując zależność.
 
 Aplikacja Spring Boot poza serwowaniem zdefiniowany servletów i usług _REST_ hostuje również wszystkie zasoby, które znajdują się na zdefiniowanych ścieżkach zasobów statycznych. W standardowej konfiguracji, jedną z takich ścieżek są zasoby wewnątrz samego _jara_ aplikacji. Korzystając z tej wiedzy skonfigurujemy plugin _maven-dependency-plugin_ w taki sposób, żeby rozpakowywał archiwum modułu _web_ do odpowiedniego katalogu budowania.
 
+W sekcji _build.plugins_ dodajemy:
+
 ```xml
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-dependency-plugin</artifactId>
-      <executions>
-        <execution>
-          <id>unpack</id>
-          <phase>generate-resources</phase>
-          <goals>
-            <goal>unpack</goal>
-          </goals>
-          <configuration>
-            <artifactItems>
-              <artifactItem>
-                <groupId>net.lipecki.demo</groupId>
-                <artifactId>demo-web</artifactId>
-                <version>${project.version}</version>
-                <type>zip</type>
-              </artifactItem>
-            </artifactItems>
-            <outputDirectory>${project.build.directory}/classes/resources</outputDirectory>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-dependency-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>unpack</id>
+      <phase>generate-resources</phase>
+      <goals>
+        <goal>unpack</goal>
+      </goals>
+      <configuration>
+        <artifactItems>
+          <artifactItem>
+            <groupId>net.lipecki.demo</groupId>
+            <artifactId>demo-web</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+          </artifactItem>
+        </artifactItems>
+        <outputDirectory>${project.build.directory}/classes/resources</outputDirectory>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
 ```
 
 W tym momencie mamy już kompletny proces budowania aplikacji. Po jego wykonaniu i uruchomieniu aplikacji możemy zarówno wywołać testową usługę _REST_, jak i obejrzeć szkielet _Angular 2_.
@@ -386,6 +398,9 @@ $ java -jar demo-app/target/demo-app-0.0.1-SNAPSHOT.jar
 2016-12-07 22:08:02.937  INFO 72316 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
 2016-12-07 22:08:02.942  INFO 72316 --- [           main] net.lipecki.demo.DemoApplication         : Started DemoApplication in 2.681 seconds (JVM running for 3.077)
 
+$ curl http://localhost:8080/greeting && echo
+Welcome!
+
 $ curl http://localhost:8080/
 <!doctype html>
 <html>
@@ -407,7 +422,9 @@ Komplet dotychczasowych zmian możemy podsumować w repozytorium _GitHub_: [repo
 
 ## Obsługa routingu z wykorzystaniem history.pushState (html5 url style)
 
-Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparcie dla nowych sposobów nawigacji. Dotychczas aplikacje web można było łatwo rozpoznać po routingu opartym o #... w url. Taki sposób nawigacji nie narzuca żadnych ograniczeń na stronę serwerową aplikacji, jednak tworzy kilka niemożliwych do rozwiązania problemów, np. renderowanie po stronie serwerowej, czy wsparcie dla SEO.
+Poza samym budowaniem i uruchamianiem aplikacji, warto jeszcze zadbać o wsparcie dla nowych sposobów nawigacji. Całość można łatwo zrealizować wykorzystując mechanizmy generowania stron błędów w _Springu_. Zanim przejdziemy do kodu, kilka słów wprowadzenia teoretycznego.
+
+Dotychczas aplikacje web można było łatwo rozpoznać po routingu opartym o #... w url. Taki sposób nawigacji nie narzuca żadnych ograniczeń na stronę serwerową aplikacji, jednak tworzy kilka niemożliwych do rozwiązania problemów, np. renderowanie po stronie serwerowej, czy wsparcie dla SEO.
 
 Obecnie, większość nowoczesnych przeglądarek dostarcza nowe _API_ _history.pushState_ pozwalające zrealizować nawigację z pominięciem znaku #. Po szczegóły odsyłam do oficjalnej dokumentacji _Angular_, natomiast w kolejnych akapitach zajmiemy się konfiguracją Spring Boot wspierającą tę strategię.
 
@@ -424,6 +441,8 @@ public ErrorViewResolver customErrorViewResolver() {
     return (request, status, model) -> status == HttpStatus.NOT_FOUND ? redirectToIndexHtml : null;
 }
 ```
+
+Sposób wprowadzenia zmiany można prześledzić w commicie GitHub: [57149a4](https://github.com/glipecki/spring-with-angular-cli-demo/commit/57149a404989fc44a012628f4506b7c556d4b36d).
 
 Wykorzystanie własnego _ErrorViewResolver_ dodatkowo zapewnia nam wsparcie dla rozróżniania żądań na podstawie nagłówka _HTTP_ _produces_. To znaczy, że żądania z przeglądarek (zawierające produces = "text/html") zostaną obsłużone zawartością zasobu _/index.html_, natomiast pozostałe (np. curl) odpowiedzą standardowym błędem _404_.
 
@@ -455,7 +474,7 @@ Część kliencką uruchamiamy przez _ng serve_, dzięki temu dostajemy kompilac
 
 Przy takiej konfiguracji aplikacja webowa jest dostępna na porcie _4200_, a backend _REST_ na porcie _8080_. Musimy jeszcze umożliwić dostęp do usług _REST_ w sposób identyczny z docelowym, w tym celu na porcie _4200_ skonfigurujemy proxy do usług.
 
-Tworzymy plik mapowań proxy w _demo-web/proxy.conf.json_:
+Dla wygody konfiguracji przenosimy wystawione usługi pod prefix _/api_ i tworzymy plik mapowań proxy w _demo-web/proxy.conf.json_:
 
 ```json
 {
@@ -465,6 +484,8 @@ Tworzymy plik mapowań proxy w _demo-web/proxy.conf.json_:
   }
 }
 ```
+
+_Przeniesienie usług możemy zrobić na dwa sposoby, zaszyć /api we wszystkich definicjach ReqestMappint albo zdefiniować w konfiguracji pod kluczem server.context-path=/api. W przykładzie zastosowałem pierwsze podejście._
 
 Część serwerową uruchamiamy w _IDE_ (lub dowolny inny sposobów), natomiast część web uruchamiamy przez _Angular CLI_:
 
@@ -478,6 +499,24 @@ $ curl http://localhost:8080/api/greeting && echo
 Welcome!
 $ curl http://localhost:4200/api/greeting && echo
 Welcome!
+```
+
+Dodakowo konfigurację uruchomienia wspierającą proxy usług warto zdefiniować w pliku _package.json_, w sekcji _scripts_ modyfikujemy polecenie skrypt _start_:
+
+```json
+"scripts": {
+  "start": "ng serve --proxy-config proxy.conf.json",
+}
+```
+
+Dzięki temu nie musimy pamiętać przełączików i parametrów, a całość możemy uruchamiać jednym poleceniem:
+
+```bash
+$ npm start
+ .
+ .
+ .
+webpack: bundle is now VALID.
 ```
 
 W ten sposób pracujemy z aplikacją wystawioną pod adresem http://localhost:4200/, a wszystkie zmiany w części serwerowej i webowej możemy mieć odświeżane na bieżąco, zaraz po ich wprowadzeniu.
@@ -494,3 +533,4 @@ Ostateczną wersję aplikacji możemy obejrzeć na GitHub: [demo@github](https:/
 - [https://github.com/glipecki/spring-with-angular-cli-demo](https://github.com/glipecki/spring-with-angular-cli-demo)
 - [http://www.consdata.pl/blog/7-szybki-start-z-angular-cli](http://www.consdata.pl/blog/7-szybki-start-z-angular-cli)
 - [https://angular.io/docs/ts/latest/guide/router.html#!#browser-url-styles](https://angular.io/docs/ts/latest/guide/router.html#!#browser-url-styles)
+- [http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#common-application-properties](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#common-application-properties)
