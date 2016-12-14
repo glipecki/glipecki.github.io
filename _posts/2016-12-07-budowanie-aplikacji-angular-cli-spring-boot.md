@@ -434,6 +434,8 @@ W założeniu przedstawiony problem możemy uprościć do zwracania treści _ind
 
 Najprostszym rozwiązaniem jest zdefiniowanie własnego _ErrorViewResolver_, który dla błędów _404_ wykona przekierowanie na zasób _/index.html_.
 
+W tym celu dodajemy do kontekstu beana _customErrorViewResolver_, który wszystkie żądania standardowo zwracając _HttpStatus.NOT_FOUND_ przekieruje na _index.html_.
+
 ```java
 @Bean
 public ErrorViewResolver customErrorViewResolver() {
@@ -441,6 +443,8 @@ public ErrorViewResolver customErrorViewResolver() {
     return (request, status, model) -> status == HttpStatus.NOT_FOUND ? redirectToIndexHtml : null;
 }
 ```
+
+_Przy takim podejściu warto zadbać o to, żeby zawsze jakiś index.html mógł się rozwiązać!_
 
 Sposób wprowadzenia zmiany można prześledzić w commicie GitHub: [57149a4](https://github.com/glipecki/spring-with-angular-cli-demo/commit/57149a404989fc44a012628f4506b7c556d4b36d).
 
