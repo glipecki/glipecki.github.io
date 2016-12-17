@@ -489,7 +489,7 @@ Dla wygody konfiguracji przenosimy wystawione usługi pod prefix _/api_ i tworzy
 }
 ```
 
-_Przeniesienie usług możemy zrobić na dwa sposoby, zaszyć /api we wszystkich definicjach ReqestMappint albo zdefiniować w konfiguracji pod kluczem server.context-path=/api. W przykładzie zastosowałem pierwsze podejście._
+_We wszystkich zdefiniowanych adnotacjach @RequestMapping dopisałem prefix /api w mapowanym url._
 
 Część serwerową uruchamiamy w _IDE_ (lub dowolny inny sposobów), natomiast część web uruchamiamy przez _Angular CLI_:
 
