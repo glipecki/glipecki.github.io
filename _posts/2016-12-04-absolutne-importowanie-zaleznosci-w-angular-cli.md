@@ -10,7 +10,7 @@ Odpowiedzialny programista tworząc aplikacje przestrzega powszechnie uznanych z
 
 W ramach standardu _ES6_ wprowadzono pojęcie modułu oraz standardowego sposobu wyrażania zależności za pomocą polecenia _import_.
 
-Za moduł przyjmuje się pojedyczny plik. Wszystkie elementy w nim zdefiniowane są jego własnością i nie zabrudzają globalenj przestrzeni aplikacji. Elementy, które chcemy udostępnić innym modułom należy jawnie wskazać przez oznaczenie ich poleceniem _export_. Wyeksportowane elementy możemy importować i używać w modułach zależnych poleceniem _import_.
+Za moduł przyjmuje się pojedyczny plik. Wszystkie elementy w nim zdefiniowane są jego własnością i nie zabrudzają globalnej przestrzeni aplikacji. Elementy, które chcemy udostępnić innym modułom należy jawnie wskazać przez oznaczenie ich poleceniem _export_. Wyeksportowane elementy możemy importować i używać w modułach zależnych poleceniem _import_.
 
 Przykładowo, możemy zdefiniować zależność pomiędzy modułami:
 
@@ -31,7 +31,7 @@ export class Component {
 
 ## Problemy z importowaniem zależności
 
-Standardowo importowane moduły są wyszukiwane względem importującego pliku. W przypadku nietrywialnej struktury może do doprowadzić do pogroszenia czytelności aplikacji.
+Standardowo importowane moduły są wyszukiwane względem importującego pliku. W przypadku nietrywialnej struktury może to doprowadzić do pogroszenia czytelności aplikacji.
 
 Wyobraźmy sobie strukturę kodu:
 
@@ -59,7 +59,7 @@ Utrzymywanie względnych ścieżek importowanych modułów jest trudne. Czytelno
 
 ## Użycie absolutnych ścieżek zależności
 
-Na szczęście zalecane podejście do pisania aplikacji w _Angular 2_ zakłada stosowanie kompilatora _TypeScript_, a ten od dłuższego czasu wspiera stosowanie absolutnych ścieżek przy importowaniu zależności. Dodatkowo, od niedawana, również _Angular CLI_ prawidłowo obsluguje bundlowanie zasobów zbudowanych z wykorzystaniem absolutnych ścieżek.
+Na szczęście zalecane podejście do pisania aplikacji w _Angular 2_ zakłada stosowanie kompilatora _TypeScript_, a ten od dłuższego czasu wspiera stosowanie absolutnych ścieżek przy importowaniu zależności. Dodatkowo, również _Angular CLI_ prawidłowo obsluguje bundlowanie zasobów zbudowanych z wykorzystaniem absolutnych ścieżek.
 
 W tym celu należy zmodyfikować plik konfiguracyjny kompilatora _TypeScript_. W pliku _tsconfig.json_ dopisujemy atrybut _baseUrl: "."_
 
@@ -82,7 +82,7 @@ export class UserDetailsService {
 
 ## Podsumowanie
 
-Wprowdzenie modularyzacji do standardu _ES6_ to ogromny krok w stronę poprawy jakości aplikacji. Jednak podawanie względnych ścieżek do zależności może szybko doprowadzić do pogorszenia czytelności kodu i przyprawić niejednego programistę o ból głowy. Na szczęścię kompilator _TypeScript_ pozawala definiować zależności wskazując absolutne ścieżki, wystarczy zdefiniować katalog względem którego chcemy wyszukiwać plików do importowania za pomocą atrybutu _baseUrl_ kompilatora.
+Wprowdzenie modularyzacji do standardu _ES6_ to ogromny krok w stronę poprawy jakości aplikacji. Jednak podawanie względnych ścieżek do zależności może szybko doprowadzić do pogorszenia czytelności kodu i przyprawić niejednego programistę o ból głowy. Na szczęście kompilator _TypeScript_ pozawala definiować zależności wskazując absolutne ścieżki - wystarczy zdefiniować katalog, względem którego chcemy wyszukiwać pliki do importowania za pomocą atrybutu _baseUrl_ kompilatora.
 
 - [Wsparcie dla absolutnych importów w kompilatorze TypeScript](https://github.com/Microsoft/TypeScript/pull/5728)
 - [Wsparcie dla konfiguracji baseUrl w Angular CLI](https://github.com/angular/angular-cli/pull/2470)
