@@ -3,7 +3,7 @@ layout: post
 published: true
 title: Pozycjonowanie zależne od scrolla
 ---
-Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna. Czy to na potrzeby przyklejenia w widocznym obszarze, czy też stworzenia efektu paralaksy lub niestandardowego flow nawigacji. Temat wydawałby się oczywisty gdyby nie to, że celowo wprowadzimy sobie dodatkowe ograniczenia (co wcale nie jest takie niecodziennie uwzględniając fantazję działów UI/UX ;-)).
+Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna, czy to na potrzeby przyklejenia w widocznym obszarze, czy też stworzenia efektu paralaksy lub niestandardowego flow nawigacji. Temat wydawałby się oczywisty, gdyby nie to, że celowo wprowadzimy sobie dodatkowe ograniczenia (co wcale nie jest takie niecodziennie, uwzględniając fantazję działów UI/UX ;-)).
 
 ## Podejście 1: tylko CSS
 * `position: fixed`,
@@ -17,7 +17,7 @@ Stosując pozycjonowanie fixed:
 * fixed zawsze tworzy nowy stacking context.
 
 Stosując pozycjonowanie sticky:
-* jeżeli element będzie wyższy niż viewport to nie będziemy mieli możliwości obejrzeć niemieszczącej się zawartości,
+* jeżeli element będzie wyższy niż viewport, to nie będziemy mieli możliwości obejrzeć niemieszczącej się zawartości,
 * sticky zawsze tworzy nowy stacking context,
 * sticky czasem może zaskoczyć swoim działaniem (przykładowo [issue w3c](https://github.com/w3c/csswg-drafts/issues/865)).
 
@@ -26,7 +26,7 @@ O ile uwzględnienie oderwanego przez fixed elementu w layoucie nie stanowi wyzw
 W wielu przypadkach fixed lub sticky załatwią problem. Jeśli jednak potrzebujesz czegoś więcej, czytaj dalej.
 
 ## Podejście 2: JavaScript
-„Nie ma takiej rzeczy której bym nie napisał w JavaScript.” 😉
+„Nie ma takiej rzeczy, której bym nie napisał w JavaScript.” 😉
 
 Przeglądarki oferują nam zdarzenie związane ze scrollowaniem treści. Na zdarzenie możemy nasłuchiwać przez zdefiniowanie własności `target.onscroll`, czy też bardziej elastycznie, dodając listener przez `target.addEventListner(’scroll’)`. Teoretycznie wystarczyłoby już tylko przeliczać pozycję przyklejanego elementu, obsłużyć przewijanie w dwóch kierunkach i nie zapomnieć o użyciu najmniej obciążającej metody przesuwania elementów po ekranie. Co może pójść źle? Sprawdźmy prosty przykład.
 
@@ -38,18 +38,18 @@ Uzyskany efekt:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/86dZ7HguQWY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Okazuje się, że funkcjonalnie możemy uzyskać wszystko czego potrzebujemy jednak jakość rozwiązania nie jest zadowalająca. Gdy przyjrzymy się sprawie bliżej zauważymy, że na różnych przeglądarkach mamy różne problemy z płynnym rysowaniem UI. Obserwujemy lekki pościg naszego elementu względem reszty strony - to stanowczo nie jest efekt z którą chcemy żeby nas kojarzono.
+Okazuje się, że funkcjonalnie możemy uzyskać wszystko, czego potrzebujemy, jednak jakość rozwiązania nie jest zadowalająca. Gdy przyjrzymy się sprawie bliżej, zauważymy, że na różnych przeglądarkach mamy różne problemy z płynnym rysowaniem UI. Obserwujemy lekki pościg naszego elementu względem reszty strony - to stanowczo nie jest efekt, z którym chcemy być kojarzeni.
 
 Możemy jeszcze raz przeanalizować nasze kody, przekonać się, że ani throttlowanie zdarzeń, ani przesuwanie transformem, ani nawet wymyślne funkcje wygładzające nic nie dają. Okazuje się, że odpowiedź jest równocześnie dobra i zła, dobra - bo z naszym kodem nie ma większych problemów; zła - bo tak po prostu działają przeglądarki, na co niespecjalnie mamy wpływ!
 
-Cały zamieszanie wynika z tego, że większość nowoczesnych przeglądarek obsługuje rysowanie oraz scrollowanie w osobnych wątkach. W praktyce oznacza to, że pozycja strony oraz jej zawartość liczone są w różnych momentach. Brak synchronizacji na tych operacjach objawia się skakaniem przesuwanego elementu. O ile takie rozwiązanie ułatwia przeglądarkom uzyskiwać upragnione 60fps przy renderowaniu, o tyle dla nas oznacza skreślenie tego rozwiązania z listy wartościowych.
+Całe zamieszanie wynika z tego, że większość nowoczesnych przeglądarek obsługuje rysowanie oraz scrollowanie w osobnych wątkach. W praktyce oznacza to, że pozycja strony oraz jej zawartość liczone są w różnych momentach. Brak synchronizacji na tych operacjach objawia się skakaniem przesuwanego elementu. O ile takie rozwiązanie ułatwia przeglądarkom uzyskiwać upragnione 60 fps przy renderowaniu, o tyle dla nas oznacza skreślenie tego rozwiązania z listy wartościowych.
 
 ## Co dalej?
 Czy to oznacza, że jeśli rozwiązanie z pozycjonowaniem CSS oferuje za mało funkcjonalności, a na lag przy rysowaniu z JavaScript nie możemy sobie pozwolić, to musimy rozłożyć ręce? Oczywiście, że nie! Na początek chwyćmy się wyjaśnienia z poprzednich akapitów - problemem jest, że scroll viewportu i DOM strony rysowane są niezależnie, w różnych momentach czasu. Gdybyśmy jednak potrafili zapewnić, że obie te rzeczy będą się działy synchronicznie? O ile nie możemy do tego zmusić przeglądarki, o tyle możemy ją oszukać 😉
 
 Załóżmy że:
 * to nie przeglądarka odpowiada za przewijanie treści strony,
-* scroll przeglądarki wyraża jedynie intencję w którym miejscu strona ma się znajdować,
+* scroll przeglądarki wyraża jedynie intencję, w którym miejscu strona ma się znajdować,
 * faktyczne przesuwanie treści odbywa się w naszym kodzie,
 * również w naszym kodzie znajduje się obsługa przesuwania przyklejonych elementów,
 * obliczenia wykonujemy co żądanie klatki animacji.
@@ -81,7 +81,7 @@ Po wprowadzeniu zmian nasz rozwiązanie prezentuje się znacznie lepiej:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GqopRJ1vuC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Sukces?
-Samodzielna obsługa scrollowania może być kusząca przy realizacji niestandardowych przepływów ekranów, animacji, czy skomplikowanych interfejsów użytkownika. Zawsze jednak należy pamiętać, że przerzucamy na własną implementację ciężar obsługi czegoś co jest robione dobrze przez każdą przeglądarkę. Czasem lepszym rozwiązaniem będzie znalezienie uproszczeń w wymaganiach, a czasem będziemy mogli wziąć na siebie takie trade-off 🙂
+Samodzielna obsługa scrollowania może być kusząca przy realizacji niestandardowych przepływów ekranów, animacji, czy skomplikowanych interfejsów użytkownika. Zawsze jednak należy pamiętać, że przerzucamy na własną implementację ciężar obsługi czegoś, co jest robione dobrze przez każdą przeglądarkę. Czasem lepszym rozwiązaniem będzie znalezienie uproszczeń w wymaganiach, a czasem będziemy mogli wziąć na siebie takie trade-off 🙂
 
 Czy ktoś stosuje takie podejścia? Tak, przykładem niech będzie apple.com, gdzie przewijane początkowo jest pionowe, następnie poziome i na końcu znowu pionowe 😉
 <iframe width="560" height="315" src="https://www.youtube.com/embed/wMdNDHM2wrc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
