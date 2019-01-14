@@ -6,9 +6,8 @@ title: Pozycjonowanie zależne od scrolla
 Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna. Czy to na potrzeby przyklejenia w widocznym obszarze, czy też stworzenia efektu paralaksy lub niestandardowego flow nawigacji. Temat wydawałby się oczywisty gdyby nie to, że celowo wprowadzimy sobie dodatkowe ograniczenia (co wcale nie jest takie niecodziennie uwzględniając fantazję działów UI/UX ;-)).
 
 ## Podejście 1: tylko CSS
-Mamy dwa sposoby przyklejenia elementu do ekranu wykorzystujące tylko CSS. Oba opierają się o zmianę pozycjonowania elementu:
-* position: fixed,
-* position: sticky.
+* `position: fixed`,
+* `osition: sticky`.
 
 Oba też mają swoje problemy i ograniczenia.
 
@@ -29,7 +28,7 @@ W wielu przypadkach fixed lub sticky załatwią problem. Jeśli jednak potrzebuj
 ## Podejście 2: JavaScript
 „Nie ma takiej rzeczy której bym nie napisał w JavaScript.” 😉
 
-Przeglądarki oferują nam zdarzenie związane ze scrollowaniem treści. Na zdarzenie możemy nasłuchiwać przez zdefiniowanie własności target.onscroll, czy też bardziej elastycznie, dodając listener przez target.addEventListner(’scroll’). Teoretycznie wystarczyłoby już tylko przeliczać pozycję przyklejanego elementu, obsłużyć przewijanie w dwóch kierunkach i nie zapomnieć o użyciu najmniej obciążającej metody przesuwania elementów po ekranie. Co może pójść źle? Sprawdźmy prosty przykład.
+Przeglądarki oferują nam zdarzenie związane ze scrollowaniem treści. Na zdarzenie możemy nasłuchiwać przez zdefiniowanie własności `target.onscroll`, czy też bardziej elastycznie, dodając listener przez `target.addEventListner(’scroll’)`. Teoretycznie wystarczyłoby już tylko przeliczać pozycję przyklejanego elementu, obsłużyć przewijanie w dwóch kierunkach i nie zapomnieć o użyciu najmniej obciążającej metody przesuwania elementów po ekranie. Co może pójść źle? Sprawdźmy prosty przykład.
 
 Implementujemy proste przeliczanie pozycji nasłuchując na zdarzenie scroll:
 
@@ -60,7 +59,7 @@ Przy takich założeniach możliwe okazuje się uzyskanie płynnego przewijania 
 ## Rozwiązanie
 Przykładowe rozwiązanie może wyglądać następująco:
 * dotychczasową strukturę DOM opakowujemy we wrapper,
-* wrapper pozycjonujemy jako fixed na cały ekran (top, bottom, left, right na 0),
+* wrapper pozycjonujemy jako fixed na cały ekran (`top, bottom, left, right` na 0),
     * to będzie nadrzędny element strony odpowiedzialny za prezentowanie viewport, w tym obsługę przewijania,
 * obok wrappera definiujemy sztuczny element replikujący wysokość wrappera,
     * to będzie element odpowiedzialny za symulowanie wysokości strony, dzięki niemu przeglądarka będzie wyświetlała prawidłowy pasek przewijania i poprawnie rozgłaszała związane z nim zdarzenia,
@@ -75,7 +74,7 @@ Przykładowa implementacja
 
 Przedstawione rozwiązanie jest najprostszym z możliwych potwierdzających teoretyczne założenia.
 
-W docelowym rozwiązaniu na pewno warto pomyśleć o rozdzieleniu funkcji pętli od faktycznego rysowania, wygładzaniu przesunięcia scrolla, dorzuceniu wskazówki will-change dla przesuwanych elementów, czy ogólnym sposobie na nasłuchiwanie na zmiany scrolla globalnie.
+W docelowym rozwiązaniu na pewno warto pomyśleć o rozdzieleniu funkcji pętli od faktycznego rysowania, wygładzaniu przesunięcia scrolla, dorzuceniu wskazówki `will-change` dla przesuwanych elementów, czy ogólnym sposobie na nasłuchiwanie na zmiany scrolla globalnie.
 
 Po wprowadzeniu zmian nasz rozwiązanie prezentuje się znacznie lepiej:
 
@@ -89,5 +88,5 @@ Czy ktoś stosuje takie podejścia? Tak, przykładem niech będzie apple.com, gd
 
 ## Przydatne linki
 - [What No One Told You About Z-Index](https://philipwalton.com/articles/what-no-one-told-you-about-z-index/)
-- [Własności pozycjonowania elementów drzewa DOM](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
-- [Scroll-linked effects](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects)
+- [Własności pozycjonowania elementów drzewa DOM @ MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
+- [Scroll-linked effects @ MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects)
