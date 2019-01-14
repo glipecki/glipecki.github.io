@@ -20,7 +20,7 @@ Stosując pozycjonowanie fixed:
 Stosując pozycjonowanie sticky:
 * jeżeli element będzie wyższy niż viewport to nie będziemy mieli możliwości obejrzeć niemieszczącej się zawartości,
 * sticky zawsze tworzy nowy stacking context,
-* sticky czasem może zaskoczyć swoim działaniem (przykładowo [issue w3c/865](https://github.com/w3c/csswg-drafts/issues/865)).
+* sticky czasem może zaskoczyć swoim działaniem (przykładowo https://github.com/w3c/csswg-drafts/issues/865).
 
 O ile uwzględnienie oderwanego przez fixed elementu w layoucie nie stanowi wyzwania, o tyle brak wsparcia dla przewijania treści i zmiana stacking context (co wpłynie np. na liczenie kolejności na osi z) mogą stanowić już zbyt duże ograniczenia.
 
@@ -32,11 +32,9 @@ W wielu przypadkach fixed lub sticky załatwią problem. Jeśli jednak potrzebuj
 Przeglądarki oferują nam zdarzenie związane ze scrollowaniem treści. Na zdarzenie możemy nasłuchiwać przez zdefiniowanie własności target.onscroll, czy też bardziej elastycznie, dodając listener przez target.addEventListner(’scroll’). Teoretycznie wystarczyłoby już tylko przeliczać pozycję przyklejanego elementu, obsłużyć przewijanie w dwóch kierunkach i nie zapomnieć o użyciu najmniej obciążającej metody przesuwania elementów po ekranie. Co może pójść źle? Sprawdźmy prosty przykład.
 
 Implementujemy proste przeliczanie pozycji nasłuchując na zdarzenie scroll:
-
 <script async src="//jsfiddle.net/gregorry/gof6we57/embed/"></script>
 
 Uzyskany efekt:
-
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/86dZ7HguQWY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Okazuje się, że funkcjonalnie możemy uzyskać wszystko czego potrzebujemy jednak jakość rozwiązania nie jest zadowalająca. Gdy przyjrzymy się sprawie bliżej zauważymy, że na różnych przeglądarkach mamy różne problemy z płynnym rysowaniem UI. Obserwujemy lekki pościg naszego elementu względem reszty strony - to stanowczo nie jest efekt z którą chcemy żeby nas kojarzono.
@@ -70,15 +68,13 @@ Przykładowe rozwiązanie może wyglądać następująco:
 * przyklejony element przewijamy odwrotnie, kompensując przesunięcie wrappera.
 
 Przykładowa implementacja
-
-<script async src="//jsfiddle.net/gregorry/gof6we57/embed/"></script>
+<script async src="//jsfiddle.net/gregorry/yatd97hv/embed/"></script>
 
 Przedstawione rozwiązanie jest najprostszym z możliwych potwierdzających teoretyczne założenia.
 
 W docelowym rozwiązaniu na pewno warto pomyśleć o rozdzieleniu funkcji pętli od faktycznego rysowania, wygładzaniu przesunięcia scrolla, dorzuceniu wskazówki will-change dla przesuwanych elementów, czy ogólnym sposobie na nasłuchiwanie na zmiany scrolla globalnie.
 
 Po wprowadzeniu zmian nasz rozwiązanie prezentuje się znacznie lepiej:
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GqopRJ1vuC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Sukces?
