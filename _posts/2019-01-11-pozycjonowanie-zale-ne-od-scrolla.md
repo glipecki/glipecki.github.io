@@ -1,6 +1,6 @@
 ---
 layout: post
-published: false
+published: true
 title: Pozycjonowanie zależne od scrolla
 ---
 Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna. Czy to na potrzeby przyklejenia w widocznym obszarze, czy też stworzenia efektu paralaksy lub niestandardowego flow nawigacji. Temat wydawałby się oczywisty gdyby nie to, że celowo wprowadzimy sobie dodatkowe ograniczenia (co wcale nie jest takie niecodziennie uwzględniając fantazję działów UI/UX ;-)).
