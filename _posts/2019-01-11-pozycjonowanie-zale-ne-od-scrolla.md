@@ -7,7 +7,7 @@ Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna, czy to 
 
 ## Podejście 1: tylko CSS
 * `position: fixed`,
-* `osition: sticky`.
+* `position: sticky`.
 
 Oba też mają swoje problemy i ograniczenia.
 
