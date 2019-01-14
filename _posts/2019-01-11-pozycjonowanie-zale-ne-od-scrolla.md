@@ -87,7 +87,7 @@ Czy ktoś stosuje takie podejścia? Tak, przykładem niech będzie apple.com, gd
 <iframe width="560" height="315" src="https://www.youtube.com/embed/wMdNDHM2wrc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Przydatne linki
+- [Scroll-linked effects @ MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects)
 - [The stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
 - [Własności pozycjonowania elementów drzewa DOM @ MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
-- [Scroll-linked effects @ MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects)
 - [What No One Told You About Z-Index](https://philipwalton.com/articles/what-no-one-told-you-about-z-index/)
