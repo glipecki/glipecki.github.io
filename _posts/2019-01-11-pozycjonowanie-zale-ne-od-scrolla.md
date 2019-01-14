@@ -86,3 +86,8 @@ Samodzielna obsługa scrollowania może być kusząca przy realizacji niestandar
 
 Czy ktoś stosuje takie podejścia? Tak, przykładem niech będzie apple.com, gdzie przewijane początkowo jest pionowe, następnie poziome i na końcu znowu pionowe 😉
 <iframe width="560" height="315" src="https://www.youtube.com/embed/wMdNDHM2wrc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Przydatne linki
+- [What No One Told You About Z-Index](https://philipwalton.com/articles/what-no-one-told-you-about-z-index/)
+- [Własności pozycjonowania elementów drzewa DOM](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
+- [Scroll-linked effects](https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Scroll-linked_effects)
