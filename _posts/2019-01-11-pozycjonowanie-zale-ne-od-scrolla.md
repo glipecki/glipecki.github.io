@@ -33,7 +33,7 @@ Przeglądarki oferują nam zdarzenie związane ze scrollowaniem treści. Na zdar
 
 Implementujemy proste przeliczanie pozycji nasłuchując na zdarzenie scroll:
 
-<script async src="//jsfiddle.net/gregorry/gof6we57/embed/"></script>
+<iframe width="100%" height="300" src="//jsfiddle.net/gregorry/gof6we57/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 Uzyskany efekt:
 
@@ -71,7 +71,7 @@ Przykładowe rozwiązanie może wyglądać następująco:
 
 Przykładowa implementacja
 
-<script async src="//jsfiddle.net/gregorry/yatd97hv/embed/"></script>
+<iframe width="100%" height="300" src="//jsfiddle.net/gregorry/yatd97hv/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 Przedstawione rozwiązanie jest najprostszym z możliwych potwierdzających teoretyczne założenia.
 
