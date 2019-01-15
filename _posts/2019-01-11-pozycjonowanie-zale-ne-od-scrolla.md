@@ -6,6 +6,8 @@ title: Pozycjonowanie zależne od scrolla
 Czasem zachodzi potrzeba uzależnienia pozycji elementu od scrolla okna, czy to na potrzeby przyklejenia w widocznym obszarze, czy też stworzenia efektu paralaksy lub niestandardowego flow nawigacji. Temat wydawałby się oczywisty, gdyby nie to, że celowo wprowadzimy sobie dodatkowe ograniczenia (co wcale nie jest takie niecodziennie, uwzględniając fantazję działów UI/UX ;-)).
 
 ## Podejście 1: tylko CSS
+Mamy dwa sposoby przyklejenia elementu do ekranu wykorzystujące tylko CSS. Oba opierają się o zmianę pozycjonowania:
+
 * `position: fixed`,
 * `position: sticky`.
 
